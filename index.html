@@ -3,10 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>My Site</title>
+<title>Alan — Portfolio</title>
+<meta name="description" content="Alan 的个人作品集：开源项目、自动化工厂、本地工具与文章。" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
 <link rel="stylesheet" href="site.css" />
 </head>
 <body data-active="home">
+
+<div class="progress" id="progress"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
 
 <div class="sidebar" id="sidebar"></div>
 
@@ -18,6 +24,17 @@
       <h1><span id="heroName"></span></h1>
       <p class="hero-bio" id="heroBio"></p>
       <div class="socials" id="socials"></div>
+
+      <div class="stats" id="stats">
+        <div class="stat"><b data-count="0" id="countProjects">0</b><span id="statProjects"></span></div>
+        <div class="stat"><b data-count="0" id="countLangs">0</b><span id="statLangs"></span></div>
+        <div class="stat"><b data-count="0" id="countArticles">0</b><span id="statArticles"></span></div>
+      </div>
+
+      <div class="marquee" id="marquee">
+        <div class="marquee-track" id="marqueeTrack"></div>
+      </div>
+
       <div class="scroll-hint" id="scrollHint">
         <span id="scrollText"></span><span class="arrow">↓</span>
       </div>
@@ -44,6 +61,8 @@
   </div>
 </div>
 
+<button class="to-top" id="toTop" title="Top">↑</button>
+
 <script src="data.js"></script>
 <script src="i18n.js"></script>
 <script src="layout.js"></script>
@@ -55,6 +74,9 @@ $("aboutText").textContent = S("about");
 $("year").textContent = new Date().getFullYear();
 $("hello").textContent = T("hello");
 $("scrollText").textContent = T("scrollHint");
+$("statProjects").textContent = T("statProjects");
+$("statLangs").textContent = T("statLangs");
+$("statArticles").textContent = T("articles");
 $("hProjects").textContent = T("sectionProjects");
 $("noteProjects").textContent = T("projectsNote");
 $("hArticles").textContent = T("sectionArticles");
@@ -64,6 +86,9 @@ $("copyright").textContent = T("copyright");
 
 $("socials").innerHTML = DATA.socials.map(s =>
   `<a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>`).join("");
+
+const marqueeText = `<span>${T("marquee")}</span><b>✦</b>`;
+$("marqueeTrack").innerHTML = marqueeText + marqueeText + marqueeText + marqueeText;
 
 $("projectGrid").innerHTML = DATA.projects.map((p, idx) => `
   <article class="card reveal" style="transition-delay:${Math.min(idx,9)*70}ms">
@@ -85,27 +110,45 @@ $("articleList").innerHTML = DATA.articles.map((a, idx) => `
     </div>
   </article>`).join("");
 
-/* 名字逐字打出 */
+/* 数字跳动 */
+function countUp(el) {
+  const target = Number(el.dataset.count) || 0;
+  let n = 0;
+  const step = Math.max(1, Math.ceil(target / 16));
+  const timer = setInterval(() => {
+    n += step;
+    if (n >= target) { n = target; clearInterval(timer); }
+    el.textContent = n;
+  }, 50);
+}
+$("countProjects").dataset.count = DATA.projects.length;
+$("countLangs").dataset.count = LANGS.length;
+$("countArticles").dataset.count = DATA.articles.length;
+
+/* 逐字打出 */
 const nameEl = $("heroName"), fullName = DATA.heroName;
 nameEl.textContent = "";
 const caret = document.createElement("span");
 caret.className = "caret";
 nameEl.appendChild(caret);
-setTimeout(() => $("hello").classList.add("in"), 150);
+setTimeout(() => $("hello").classList.add("in"), 120);
 setTimeout(function () {
   let i = 0;
   (function step() {
     if (i < fullName.length) {
       caret.insertAdjacentText("beforebegin", fullName[i]);
       i++;
-      setTimeout(step, 280);
+      setTimeout(step, 230);
     } else {
       $("heroBio").classList.add("in");
       $("socials").classList.add("in");
+      $("stats").classList.add("in");
+      $("marquee").classList.add("in");
       $("scrollHint").classList.add("in");
+      document.querySelectorAll(".stat b").forEach(countUp);
     }
   })();
-}, 450);
+}, 400);
 
 /* 滚动淡入 */
 const io = new IntersectionObserver(entries => {
@@ -114,6 +157,33 @@ const io = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.12 });
 document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+/* 顶部进度条 + 回到顶部 */
+function onScroll() {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  $("progress").style.width = (max > 0 ? (scrollY / max) * 100 : 0) + "%";
+  $("toTop").classList.toggle("show", scrollY > 400);
+}
+addEventListener("scroll", onScroll, { passive: true });
+onScroll();
+$("toTop").onclick = () => scrollTo({ top: 0, behavior: "smooth" });
+
+/* 卡片 3D 倾斜跟随鼠标 */
+if (matchMedia("(hover:hover) and (pointer:fine)").matches) {
+  document.querySelectorAll(".card").forEach(card => {
+    card.addEventListener("mousemove", e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.setProperty("--rx", (-y * 10).toFixed(2) + "deg");
+      card.style.setProperty("--ry", (x * 14).toFixed(2) + "deg");
+    });
+    card.addEventListener("mouseleave", () => {
+      card.style.setProperty("--rx", "0deg");
+      card.style.setProperty("--ry", "0deg");
+    });
+  });
+}
 </script>
 </body>
 </html>

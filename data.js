@@ -20,7 +20,7 @@ const LANGS = [
 // 界面文字
 const UI = {
   "zh-CN": {
-    home:"首页", scrollHint:"向下滑动查看", projects:"项目", articles:"我的文章", about:"关于", hello:"你好，我是",
+    home:"首页", scrollHint:"向下滑动查看", marquee:"欢迎来到我的作品集 · 自动化工厂 · 本地工具 · 开源项目 · ", statProjects:"项目", statLangs:"语言", statRepos:"GitHub 仓库", projects:"项目", articles:"我的文章", about:"关于", hello:"你好，我是",
     sectionProjects:"项目", projectsNote:"我的开源项目。点击「查看详情」可以看到完整介绍与下载方式。",
     sectionArticles:"我的文章", articlesNote:"我发布的文章与笔记，点击标题查看完整内容。",
     sectionAbout:"关于我", viewDetail:"查看详情", download:"下载", githubView:"在 GitHub 查看",
@@ -31,7 +31,7 @@ const UI = {
     noRelease:"该项目没有发布安装包，下载为源码压缩包。"
   },
   "zh-TW": {
-    home:"首頁", scrollHint:"向下滑動查看", projects:"專案", articles:"我的文章", about:"關於", hello:"你好，我是",
+    home:"首頁", scrollHint:"向下滑動查看", marquee:"歡迎來到我的作品集 · 自動化工廠 · 本機工具 · 開源專案 · ", statProjects:"專案", statLangs:"語言", statRepos:"GitHub 儲存庫", projects:"專案", articles:"我的文章", about:"關於", hello:"你好，我是",
     sectionProjects:"專案", projectsNote:"我的開源專案。點擊「查看詳情」可以看到完整介紹與下載方式。",
     sectionArticles:"我的文章", articlesNote:"我發表的文章與筆記，點擊標題查看完整內容。",
     sectionAbout:"關於我", viewDetail:"查看詳情", download:"下載", githubView:"在 GitHub 查看",
@@ -42,7 +42,7 @@ const UI = {
     noRelease:"該專案沒有發布安裝包，下載為原始碼壓縮檔。"
   },
   "ja": {
-    home:"ホーム", scrollHint:"スクロールして見る", projects:"プロジェクト", articles:"記事", about:"概要", hello:"こんにちは、私は",
+    home:"ホーム", scrollHint:"スクロールして見る", marquee:"私のポートフォリオへようこそ · 自動化工場 · ローカルツール · オープンソース · ", statProjects:"プロジェクト", statLangs:"言語", statRepos:"GitHub リポジトリ", projects:"プロジェクト", articles:"記事", about:"概要", hello:"こんにちは、私は",
     sectionProjects:"プロジェクト", projectsNote:"私のオープンソースプロジェクトです。「詳細を見る」をクリックすると、完全な紹介とダウンロード方法が表示されます。",
     sectionArticles:"記事", articlesNote:"私が書いた記事とメモです。タイトルをクリックすると全文が読めます。",
     sectionAbout:"私について", viewDetail:"詳細を見る", download:"ダウンロード", githubView:"GitHub で見る",
@@ -53,7 +53,7 @@ const UI = {
     noRelease:"インストーラーは公開されていないため、ダウンロードはソースの ZIP です。"
   },
   "en": {
-    home:"Home", scrollHint:"Scroll to explore", projects:"Projects", articles:"My Articles", about:"About", hello:"Hi, I'm",
+    home:"Home", scrollHint:"Scroll to explore", marquee:"WELCOME TO MY PORTFOLIO · AUTOMATION · LOCAL TOOLS · OPEN SOURCE · ", statProjects:"Projects", statLangs:"Languages", statRepos:"GitHub repos", projects:"Projects", articles:"My Articles", about:"About", hello:"Hi, I'm",
     sectionProjects:"Projects", projectsNote:"My open-source projects. Click \"View details\" for the full description and download options.",
     sectionArticles:"My Articles", articlesNote:"Articles and notes I've published. Click a title to read the full text.",
     sectionAbout:"About Me", viewDetail:"View details", download:"Download", githubView:"View on GitHub",
