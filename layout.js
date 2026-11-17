@@ -10,6 +10,7 @@
     cinema.className = "cinema";
     cinema.innerHTML =
       '<div class="cinema-glow"></div>' +
+      '<div class="cinema-aurora"></div>' +
       '<div class="cinema-stars"></div>' +
       '<div class="cinema-beam"></div>' +
       '<div class="cinema-grain"></div>' +

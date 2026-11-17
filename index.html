@@ -5,16 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Alan — Portfolio</title>
 <meta name="description" content="Alan 的个人作品集：开源项目、自动化工厂、本地工具与文章。" />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='34' fill='none' stroke='%237c8cff' stroke-width='10'/></svg>" />
 <link rel="stylesheet" href="site.css" />
 </head>
 <body data-active="home">
 
-<div class="intro-curtain" id="introCurtain">
-  <div class="half top"></div>
-  <div class="intro-logo" id="introLogo">⚡</div>
-  <div class="half bottom"></div>
-</div>
+<div class="intro-curtain" id="introCurtain"></div>
 
 <div class="progress" id="progress"></div>
 <div class="orb orb1"></div>
@@ -76,8 +72,8 @@
 <script src="i18n.js"></script>
 <script src="layout.js"></script>
 <script>
-/* 开场帷幕：加载后自动拉开 */
-addEventListener("load", () => setTimeout(() => document.getElementById("introCurtain").classList.add("open"), 350));
+/* 开场：页面一就绪就丝滑淡出，无停顿 */
+addEventListener("DOMContentLoaded", () => requestAnimationFrame(() => document.getElementById("introCurtain").classList.add("open")));
 
 const $ = id => document.getElementById(id);
 $("footerName").textContent = DATA.heroName;
@@ -106,24 +102,32 @@ const marqueeText = `<span>${T("marquee")}</span><b>✦</b>`;
 $("marqueeTrack").innerHTML = marqueeText + marqueeText + marqueeText + marqueeText;
 
 $("projectGrid").innerHTML = DATA.projects.map((p, idx) => `
-  <article class="card reveal" style="transition-delay:${Math.min(idx,9)*70}ms">
-    <h3><a href="${L(p.detail)}">${C(p,"title")}</a></h3>
+  <article class="card reveal" data-href="${L(p.detail)}" style="transition-delay:${Math.min(idx,9)*70}ms">
+    <h3>${C(p,"title")}</h3>
     <p>${C(p,"desc")}</p>
     <div class="tags">${C(p,"tags").map(t=>`<span>${t}</span>`).join("")}</div>
     <div class="btn-row">
-      <a class="btn btn-primary" href="${L(p.detail)}">${T("viewDetail")}</a>
-      <a class="btn btn-ghost" href="${p.download}" target="_blank" rel="noopener">${T("download")}</a>
+      <button class="btn btn-primary" type="button">${T("viewDetail")}</button>
+      <a class="btn btn-ghost" href="${p.download}" target="_blank" rel="noopener" data-noroute>${T("download")}</a>
     </div>
   </article>`).join("");
 
 $("articleList").innerHTML = DATA.articles.map((a, idx) => `
-  <article class="article reveal" style="transition-delay:${idx*100}ms">
+  <article class="article reveal" data-href="${L(a.detail)}" style="transition-delay:${idx*100}ms">
     <div class="date">${a.date}</div>
     <div>
-      <h3><a href="${L(a.detail)}">${C(a,"title")}</a></h3>
+      <h3>${C(a,"title")}</h3>
       <div class="excerpt">${C(a,"excerpt")}</div>
     </div>
   </article>`).join("");
+
+/* 整框点击：点卡片任意位置进入详情（下载按钮除外） */
+document.addEventListener("click", e => {
+  const box = e.target.closest("[data-href]");
+  if (!box) return;
+  if (e.target.closest("[data-noroute]")) return;
+  location.href = box.dataset.href;
+});
 
 /* 数字跳动 */
 function countUp(el) {
@@ -192,7 +196,9 @@ function onScroll() {
   });
   if (nearest && nearest.id !== currentPage) {
     currentPage = nearest.id;
-    if (window.__markNav) window.__markNav(currentPage);
+    // 直接操作导航高亮，不依赖外部函数
+    document.querySelectorAll("#sidebar nav a").forEach(a =>
+      a.classList.toggle("active", a.dataset.sec === currentPage));
     pages.forEach(p => p.classList.toggle("active", p === nearest));
     // 每次换页触发一次擦除转场
     const t = $("transition");
