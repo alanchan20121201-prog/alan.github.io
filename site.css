@@ -22,6 +22,36 @@ a:hover{text-decoration:underline}
 }
 /* 滚动视差：整个背景随页面滚动缓慢上移，让画面"活"起来 */
 .cinema{transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+/* 透视网格：缓慢向观察者流动（科幻电影感） */
+.cinema-grid{position:absolute;left:-50%;right:-50%;bottom:-20%;height:70%;
+  background-image:
+    linear-gradient(rgba(124,140,255,.10) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(124,140,255,.10) 1px,transparent 1px);
+  background-size:60px 60px;
+  transform:perspective(400px) rotateX(65deg);
+  transform-origin:bottom;opacity:.35;
+  mask-image:linear-gradient(to top,#000,transparent 75%);
+  animation:gridFlow 8s linear infinite}
+@keyframes gridFlow{to{background-position:0 60px,0 0}}
+/* 流星：几道斜向划过的光迹 */
+.cinema-meteors{position:absolute;inset:0;overflow:hidden}
+.cinema-meteors::before,.cinema-meteors::after{content:"";position:absolute;
+  width:160px;height:2px;background:linear-gradient(90deg,transparent,rgba(200,220,255,.9),transparent);
+  transform:rotate(-35deg);opacity:0;animation:meteor 9s ease-in infinite}
+.cinema-meteors::before{top:15%;left:-20%}
+.cinema-meteors::after{top:45%;left:-20%;animation-delay:4.5s;animation-duration:12s}
+@keyframes meteor{
+  0%{transform:translate(0,0) rotate(-35deg);opacity:0}
+  5%{opacity:.9}
+  25%{opacity:0;transform:translate(90vw,55vh) rotate(-35deg)}
+  100%{opacity:0;transform:translate(90vw,55vh) rotate(-35deg)}
+}
+/* 脉冲光环：中心缓慢呼吸的光晕 */
+.cinema-pulse{position:absolute;left:50%;top:50%;width:60vmax;height:60vmax;
+  transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle,transparent 55%,rgba(124,140,255,.05) 70%,transparent 85%);
+  animation:pulse 7s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(.85);opacity:.4}50%{transform:translate(-50%,-50%) scale(1.15);opacity:.9}}
 .cinema-glow{position:absolute;inset:-20%;will-change:transform;
   background:
     radial-gradient(circle at 25% 30%,rgba(124,140,255,.34),transparent 32%),
@@ -345,6 +375,17 @@ footer{border-top:1px solid var(--border);padding-top:30px;margin-top:60px;
   .wrap{padding:0 20px}
   .page{padding:70px 0 50px}
   .scroll-hint{display:none}
-  .orb{display:none}
+  .orb,.cinema-grid,.cinema-meteors,.cinema-pulse,.cinema-beam{display:none}
   .card:hover{transform:translateY(-6px)}
+  /* 手机排版优化 */
+  .hero h1{font-size:clamp(2.8rem,16vw,4rem)}
+  .hero-bio{font-size:1rem}
+  section h2{font-size:1.6rem}
+  .grid{grid-template-columns:1fr}
+  .article{flex-direction:column;gap:6px}
+  .article .date{min-width:0}
+  .stats{gap:22px}
+  .stat b{font-size:1.6rem}
+  .particle-canvas{opacity:.4}
+  .to-top{right:14px;bottom:14px;width:40px;height:40px}
 }

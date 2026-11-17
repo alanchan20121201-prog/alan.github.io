@@ -22,10 +22,10 @@ const LANGS = [
 // 界面文字
 const UI = {
   "zh-CN": {
-    home:"首页", scrollHint:"向下滑动查看", marquee:"欢迎来到我的作品集 · 自动化工厂 · 本地工具 · 开源项目 · ", statProjects:"项目", statLangs:"语言", statRepos:"GitHub 仓库", projects:"项目", articles:"我的文章", about:"关于", hello:"你好，我是",
-    sectionProjects:"项目", projectsNote:"我的开源项目。点击「查看详情」可以看到完整介绍与下载方式。",
-    sectionArticles:"我的文章", articlesNote:"我发布的文章与笔记，点击标题查看完整内容。",
-    sectionAbout:"关于我", viewDetail:"查看详情", download:"下载", githubView:"在 GitHub 查看",
+    home:"首页", scrollHint:"向下滑动查看", marquee:"欢迎来到作品集 · 自动化工厂 · 本地工具 · 开源项目 · ", statProjects:"项目", statLangs:"语言", statRepos:"GitHub 仓库", projects:"项目", articles:"文章", about:"关于", hello:"欢迎来到",
+    sectionProjects:"项目", projectsNote:"开源项目。点击「查看详情」可以看到完整介绍与下载方式。",
+    sectionArticles:"文章", articlesNote:"发布的文章与笔记，点击标题查看完整内容。",
+    sectionAbout:"关于", viewDetail:"查看详情", download:"下载", githubView:"在 GitHub 查看",
     backHome:"返回首页", backProjects:"← 返回项目列表", backArticles:"← 返回文章列表",
     notFoundProject:"找不到这个项目", notFoundProjectDesc:"请从首页项目列表重新进入。",
     notFoundArticle:"找不到这篇文章", copyright:"版权所有",
@@ -36,10 +36,10 @@ const UI = {
     catNotes:"随笔", catTutorial:"教程"
   },
   "zh-TW": {
-    home:"首頁", scrollHint:"向下滑動查看", marquee:"歡迎來到我的作品集 · 自動化工廠 · 本機工具 · 開源專案 · ", statProjects:"專案", statLangs:"語言", statRepos:"GitHub 儲存庫", projects:"專案", articles:"我的文章", about:"關於", hello:"你好，我是",
-    sectionProjects:"專案", projectsNote:"我的開源專案。點擊「查看詳情」可以看到完整介紹與下載方式。",
-    sectionArticles:"我的文章", articlesNote:"我發表的文章與筆記，點擊標題查看完整內容。",
-    sectionAbout:"關於我", viewDetail:"查看詳情", download:"下載", githubView:"在 GitHub 查看",
+    home:"首頁", scrollHint:"向下滑動查看", marquee:"歡迎來到作品集 · 自動化工廠 · 本機工具 · 開源專案 · ", statProjects:"專案", statLangs:"語言", statRepos:"GitHub 儲存庫", projects:"專案", articles:"文章", about:"關於", hello:"歡迎來到",
+    sectionProjects:"專案", projectsNote:"開源專案。點擊「查看詳情」可以看到完整介紹與下載方式。",
+    sectionArticles:"文章", articlesNote:"發表的文章與筆記，點擊標題查看完整內容。",
+    sectionAbout:"關於", viewDetail:"查看詳情", download:"下載", githubView:"在 GitHub 查看",
     backHome:"返回首頁", backProjects:"← 返回專案列表", backArticles:"← 返回文章列表",
     notFoundProject:"找不到這個專案", notFoundProjectDesc:"請從首頁專案列表重新進入。",
     notFoundArticle:"找不到這篇文章", copyright:"版權所有",
@@ -50,10 +50,10 @@ const UI = {
     catNotes:"隨筆", catTutorial:"教學"
   },
   "ja": {
-    home:"ホーム", scrollHint:"スクロールして見る", marquee:"私のポートフォリオへようこそ · 自動化工場 · ローカルツール · オープンソース · ", statProjects:"プロジェクト", statLangs:"言語", statRepos:"GitHub リポジトリ", projects:"プロジェクト", articles:"記事", about:"概要", hello:"こんにちは、私は",
-    sectionProjects:"プロジェクト", projectsNote:"私のオープンソースプロジェクトです。「詳細を見る」をクリックすると、完全な紹介とダウンロード方法が表示されます。",
-    sectionArticles:"記事", articlesNote:"私が書いた記事とメモです。タイトルをクリックすると全文が読めます。",
-    sectionAbout:"私について", viewDetail:"詳細を見る", download:"ダウンロード", githubView:"GitHub で見る",
+    home:"ホーム", scrollHint:"スクロールして見る", marquee:"ポートフォリオへようこそ · 自動化工場 · ローカルツール · オープンソース · ", statProjects:"プロジェクト", statLangs:"言語", statRepos:"GitHub リポジトリ", projects:"プロジェクト", articles:"記事", about:"概要", hello:"ようこそ",
+    sectionProjects:"プロジェクト", projectsNote:"オープンソースプロジェクトです。「詳細を見る」をクリックすると、完全な紹介とダウンロード方法が表示されます。",
+    sectionArticles:"記事", articlesNote:"書いた記事とメモです。タイトルをクリックすると全文が読めます。",
+    sectionAbout:"紹介", viewDetail:"詳細を見る", download:"ダウンロード", githubView:"GitHub で見る",
     backHome:"ホームに戻る", backProjects:"← プロジェクト一覧に戻る", backArticles:"← 記事一覧に戻る",
     notFoundProject:"プロジェクトが見つかりません", notFoundProjectDesc:"ホームのプロジェクト一覧から再度お進みください。",
     notFoundArticle:"記事が見つかりません", copyright:"無断転載を禁じます",
@@ -64,10 +64,10 @@ const UI = {
     catNotes:"メモ", catTutorial:"チュートリアル"
   },
   "en": {
-    home:"Home", scrollHint:"Scroll to explore", marquee:"WELCOME TO MY PORTFOLIO · AUTOMATION · LOCAL TOOLS · OPEN SOURCE · ", statProjects:"Projects", statLangs:"Languages", statRepos:"GitHub repos", projects:"Projects", articles:"My Articles", about:"About", hello:"Hi, I'm",
+    home:"Home", scrollHint:"Scroll to explore", marquee:"WELCOME TO THE PORTFOLIO · AUTOMATION · LOCAL TOOLS · OPEN SOURCE · ", statProjects:"Projects", statLangs:"Languages", statRepos:"GitHub repos", projects:"Projects", articles:"Articles", about:"About", hello:"Welcome to",
     sectionProjects:"Projects", projectsNote:"My open-source projects. Click \"View details\" for the full description and download options.",
-    sectionArticles:"My Articles", articlesNote:"Articles and notes I've published. Click a title to read the full text.",
-    sectionAbout:"About Me", viewDetail:"View details", download:"Download", githubView:"View on GitHub",
+    sectionArticles:"Articles", articlesNote:"Published articles and notes. Click a title to read the full text.",
+    sectionAbout:"About", viewDetail:"View details", download:"Download", githubView:"View on GitHub",
     backHome:"Back to home", backProjects:"← Back to projects", backArticles:"← Back to articles",
     notFoundProject:"Project not found", notFoundProjectDesc:"Please go back to the project list on the home page.",
     notFoundArticle:"Article not found", copyright:"All rights reserved",
@@ -78,9 +78,9 @@ const UI = {
     catNotes:"Notes", catTutorial:"Tutorial"
   },
   "ko": {
-    home:"홈", scrollHint:"스크롤하여 보기", marquee:"제 포트폴리오에 오신 것을 환영합니다 · 자동화 공장 · 로컬 도구 · 오픈 소스 · ", statProjects:"프로젝트", statLangs:"언어", statRepos:"GitHub 저장소", projects:"프로젝트", articles:"내 글", about:"소개", hello:"안녕하세요, 저는",
-    sectionProjects:"프로젝트", projectsNote:"제 오픈 소스 프로젝트입니다. '자세히 보기'를 클릭하면 전체 소개와 다운로드 방법을 볼 수 있습니다.",
-    sectionArticles:"내 글", articlesNote:"제가 쓴 글과 메모입니다. 제목을 클릭하면 전체 내용을 읽을 수 있습니다.",
+    home:"홈", scrollHint:"스크롤하여 보기", marquee:"포트폴리오에 오신 것을 환영합니다 · 자동화 공장 · 로컬 도구 · 오픈 소스 · ", statProjects:"프로젝트", statLangs:"언어", statRepos:"GitHub 저장소", projects:"프로젝트", articles:"글", about:"소개", hello:"환영합니다",
+    sectionProjects:"프로젝트", projectsNote:"오픈 소스 프로젝트입니다. '자세히 보기'를 클릭하면 전체 소개와 다운로드 방법을 볼 수 있습니다.",
+    sectionArticles:"글", articlesNote:"작성한 글과 메모입니다. 제목을 클릭하면 전체 내용을 읽을 수 있습니다.",
     sectionAbout:"저에 대해", viewDetail:"자세히 보기", download:"다운로드", githubView:"GitHub에서 보기",
     backHome:"홈으로", backProjects:"← 프로젝트 목록으로", backArticles:"← 글 목록으로",
     notFoundProject:"프로젝트를 찾을 수 없습니다", notFoundProjectDesc:"홈의 프로젝트 목록에서 다시 들어주세요.",
@@ -92,10 +92,10 @@ const UI = {
     catNotes:"노트", catTutorial:"튜토리얼"
   },
   "es": {
-    home:"Inicio", scrollHint:"Desliza para explorar", marquee:"BIENVENIDO A MI PORTAFOLIO · AUTOMATIZACIÓN · HERRAMIENTAS LOCALES · CÓDIGO ABIERTO · ", statProjects:"Proyectos", statLangs:"Idiomas", statRepos:"Repositorios de GitHub", projects:"Proyectos", articles:"Mis artículos", about:"Acerca de", hello:"Hola, soy",
+    home:"Inicio", scrollHint:"Desliza para explorar", marquee:"BIENVENIDO AL PORTAFOLIO · AUTOMATIZACIÓN · HERRAMIENTAS LOCALES · CÓDIGO ABIERTO · ", statProjects:"Proyectos", statLangs:"Idiomas", statRepos:"Repositorios de GitHub", projects:"Proyectos", articles:"Artículos", about:"Acerca de", hello:"Bienvenido a",
     sectionProjects:"Proyectos", projectsNote:"Mis proyectos de código abierto. Haz clic en «Ver detalles» para ver la descripción completa y las opciones de descarga.",
-    sectionArticles:"Mis artículos", articlesNote:"Artículos y notas que he publicado. Haz clic en un título para leer el texto completo.",
-    sectionAbout:"Sobre mí", viewDetail:"Ver detalles", download:"Descargar", githubView:"Ver en GitHub",
+    sectionArticles:"Artículos", articlesNote:"Artículos y notas publicados. Haz clic en un título para leer el texto completo.",
+    sectionAbout:"Acerca de", viewDetail:"Ver detalles", download:"Descargar", githubView:"Ver en GitHub",
     backHome:"Volver al inicio", backProjects:"← Volver a proyectos", backArticles:"← Volver a artículos",
     notFoundProject:"Proyecto no encontrado", notFoundProjectDesc:"Vuelve a la lista de proyectos en el inicio.",
     notFoundArticle:"Artículo no encontrado", copyright:"Todos los derechos reservados",
@@ -109,22 +109,22 @@ const UI = {
 
 // 网站基本信息（多语言）
 const SITE = {
-  siteName: { "zh-CN":"我的网站", "zh-TW":"我的網站", "ja":"マイサイト", "en":"My Site", "ko":"내 웹사이트", "es":"Mi sitio web" },
+  siteName: { "zh-CN":"作品集", "zh-TW":"作品集", "ja":"ポートフォリオ", "en":"Portfolio", "ko":"포트폴리오", "es":"Portafolio" },
   heroBio: {
-    "zh-CN":"欢迎来到我的个人网站。我会做项目，也会写下我学到的东西。",
-    "zh-TW":"歡迎來到我的個人網站。我會做專案，也會寫下我學到的東西。",
-    "ja":"私の個人サイトへようこそ。プロジェクトを作り、学んだことを書いています。",
-    "en":"Welcome to my personal site. I build things and write about what I learn.",
-    "ko":"제 개인 웹사이트에 오신 것을 환영합니다. 프로젝트를 만들고 배운 것을 글로 씁니다.",
-    "es":"Bienvenido a mi sitio personal. Creo proyectos y escribo sobre lo que aprendo."
+    "zh-CN":"欢迎来到个人网站。这里展示项目，也记录学到的东西。",
+    "zh-TW":"歡迎來到個人網站。這裡展示專案，也記錄學到的東西。",
+    "ja":"個人サイトへようこそ。プロジェクトを作り、学んだことを書いています。",
+    "en":"Welcome to this personal site. Projects and notes about what has been learned.",
+    "ko":"개인 웹사이트에 오신 것을 환영합니다. 프로젝트를 만들고 배운 것을 글로 씁니다.",
+    "es":"Bienvenido al sitio personal. Proyectos y notas sobre lo que se aprende."
   },
   about: {
-    "zh-CN":"我是一个喜欢做实用项目、并通过写作分享知识的开发者。所有项目都开源在我的 GitHub 上。",
-    "zh-TW":"我是一個喜歡做實用專案、並透過寫作分享知識的開發者。所有專案都開源在我的 GitHub 上。",
+    "zh-CN":"喜欢做实用项目、并通过写作分享知识的开发者。所有项目开源在 GitHub 上。",
+    "zh-TW":"喜歡做實用專案、並透過寫作分享知識的開發者。所有專案開源在 GitHub 上。",
     "ja":"実用的なプロジェクトを作り、執筆を通じて知識を共有するのが好きな開発者です。すべてのプロジェクトは GitHub で公開しています。",
-    "en":"I'm a developer who enjoys building useful projects and sharing knowledge through writing. All my projects are open source on GitHub.",
-    "ko":"실용적인 프로젝트를 만들고 글을 통해 지식을 공유하는 것을 좋아하는 개발자입니다. 모든 프로젝트는 제 GitHub에 오픈 소스로 공개되어 있습니다.",
-    "es":"Soy un desarrollador al que le encanta crear proyectos útiles y compartir conocimientos escribiendo. Todos mis proyectos son de código abierto en GitHub."
+    "en":"A developer who enjoys building useful projects and sharing knowledge through writing. All projects are open source on GitHub.",
+    "ko":"실용적인 프로젝트를 만들고 글을 통해 지식을 공유하는 것을 좋아하는 개발자입니다. 모든 프로젝트는 GitHub에 오픈 소스로 공개되어 있습니다.",
+    "es":"Un desarrollador al que le encanta crear proyectos útiles y compartir conocimientos escribiendo. Todos los proyectos son de código abierto en GitHub."
   }
 };
 
@@ -273,22 +273,22 @@ const DATA = {
       date:"2026-11-17",
       cat:"notes",
       i18n:{
-        "zh-CN":{ title:"我的第一篇博客", excerpt:"这是文章的简短摘要，点开标题可以查看完整内容。", content:"这里是文章正文。你可以在 data.js 里修改 content 字段，写下完整的文章内容。" },
-        "zh-TW":{ title:"我的第一篇部落格", excerpt:"這是文章的簡短摘要，點開標題可以查看完整內容。", content:"這裡是文章正文。你可以在 data.js 裡修改 content 欄位，寫下完整的文章內容。" },
-        "ja":{ title:"私の最初のブログ投稿", excerpt:"記事の短い概要です。タイトルをクリックすると全文が読めます。", content:"ここが本文です。data.js の content フィールドを編集して、記事の本文を書いてください。" },
-        "en":{ title:"My First Blog Post", excerpt:"A short preview of the article. Click the title to read the full text.", content:"This is the article body. Edit the content field in data.js to write your full article." },
-        "ko":{ title:"나의 첫 블로그 글", excerpt:"이 글의 짧은 요약입니다. 제목을 클릭하면 전체 내용을 볼 수 있습니다.", content:"여기가 본문입니다. data.js의 content 필드를 수정하여 전체 글을 작성하세요." },
-        "es":{ title:"Mi primer artículo", excerpt:"Un breve resumen del artículo. Haz clic en el título para leer el texto completo.", content:"Este es el cuerpo del artículo. Edita el campo content en data.js para escribir tu texto completo." },
+        "zh-CN":{ title:"第一篇博客", excerpt:"这是文章的简短摘要，点开标题可以查看完整内容。", content:"这里是文章正文。你可以在 data.js 里修改 content 字段，写下完整的文章内容。" },
+        "zh-TW":{ title:"第一篇部落格", excerpt:"這是文章的簡短摘要，點開標題可以查看完整內容。", content:"這裡是文章正文。你可以在 data.js 裡修改 content 欄位，寫下完整的文章內容。" },
+        "ja":{ title:"最初のブログ投稿", excerpt:"記事の短い概要です。タイトルをクリックすると全文が読めます。", content:"ここが本文です。data.js の content フィールドを編集して、記事の本文を書いてください。" },
+        "en":{ title:"First Blog Post", excerpt:"A short preview of the article. Click the title to read the full text.", content:"This is the article body. Edit the content field in data.js to write your full article." },
+        "ko":{ title:"첫 블로그 글", excerpt:"이 글의 짧은 요약입니다. 제목을 클릭하면 전체 내용을 볼 수 있습니다.", content:"여기가 본문입니다. data.js의 content 필드를 수정하여 전체 글을 작성하세요." },
+        "es":{ title:"Primer artículo", excerpt:"Un breve resumen del artículo. Haz clic en el título para leer el texto completo.", content:"Este es el cuerpo del artículo. Edita el campo content en data.js para escribir tu texto completo." },
       }
     },
     {
       date:"2026-11-01",
       cat:"tutorial",
       i18n:{
-        "zh-CN":{ title:"我是怎么搭建这个网站的", excerpt:"简单记录一下这个个人网站是怎么做出来的。", content:"这是一个纯静态网站，由一个 index.html、一个数据文件 data.js，以及项目详情页 detail.html 和文章详情页 article.html 组成。更新网站只需要改 data.js。" },
-        "zh-TW":{ title:"我是怎麼搭建這個網站的", excerpt:"簡單記錄一下這個個人網站是怎麼做出來的。", content:"這是一個純靜態網站，由一個 index.html、一個資料檔 data.js，以及專案詳情頁 detail.html 和文章詳情頁 article.html 組成。更新網站只需要改 data.js。" },
+        "zh-CN":{ title:"这个网站是怎么搭建的", excerpt:"简单记录一下这个个人网站是怎么做出来的。", content:"这是一个纯静态网站，由一个 index.html、一个数据文件 data.js，以及项目详情页 detail.html 和文章详情页 article.html 组成。更新网站只需要改 data.js。" },
+        "zh-TW":{ title:"這個網站是怎麼搭建的", excerpt:"簡單記錄一下這個個人網站是怎麼做出來的。", content:"這是一個純靜態網站，由一個 index.html、一個資料檔 data.js，以及專案詳情頁 detail.html 和文章詳情頁 article.html 組成。更新網站只需要改 data.js。" },
         "ja":{ title:"このサイトの作り方", excerpt:"この個人サイトをどう作ったかを簡単に記録します。", content:"これは静的サイトです。index.html、データファイルの data.js、プロジェクト詳細ページ detail.html、記事詳細ページ article.html で構成されています。更新するときは data.js だけを編集します。" },
-        "en":{ title:"How I Built This Site", excerpt:"A short note about how this personal website was made.", content:"This is a static site made of index.html, the data file data.js, the project detail page detail.html and the article detail page article.html. To update it, just edit data.js." },
+        "en":{ title:"How This Site Was Built", excerpt:"A short note about how this personal website was made.", content:"This is a static site made of index.html, the data file data.js, the project detail page detail.html and the article detail page article.html. To update it, just edit data.js." },
         "ko":{ title:"이 웹사이트를 만든 방법", excerpt:"이 개인 웹사이트를 어떻게 만들었는지 간단히 기록합니다.", content:"이 사이트는 정적 웹사이트로, index.html, 데이터 파일 data.js, 프로젝트 상세 페이지 detail.html, 글 상세 페이지 article.html로 구성됩니다. 사이트를 업데이트하려면 data.js만 수정하면 됩니다." },
         "es":{ title:"Cómo construí este sitio", excerpt:"Una breve nota sobre cómo se hizo este sitio personal.", content:"Este es un sitio estático formado por index.html, el archivo de datos data.js, la página de detalle de proyectos detail.html y la de artículos article.html. Para actualizarlo, basta con editar data.js." },
       }

@@ -9,10 +9,13 @@
     cinema.id = "cinema";
     cinema.className = "cinema";
     cinema.innerHTML =
+      '<div class="cinema-grid"></div>' +
+      '<div class="cinema-meteors"></div>' +
       '<div class="cinema-glow"></div>' +
       '<div class="cinema-aurora"></div>' +
       '<div class="cinema-stars"></div>' +
       '<div class="cinema-beam"></div>' +
+      '<div class="cinema-pulse"></div>' +
       '<div class="cinema-grain"></div>' +
       '<div class="cinema-vignette"></div>';
     document.body.insertBefore(cinema, document.body.firstChild);
