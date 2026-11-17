@@ -18,6 +18,17 @@
     document.body.insertBefore(cinema, document.body.firstChild);
   }
 
+  /* 粒子星座画布（所有页面通用） */
+  if (!document.getElementById("particleCanvas")) {
+    const cv = document.createElement("canvas");
+    cv.id = "particleCanvas";
+    cv.className = "particle-canvas";
+    document.body.insertBefore(cv, document.body.firstChild);
+    const sc = document.createElement("script");
+    sc.src = "particles.js";
+    document.body.appendChild(sc);
+  }
+
   const box = $("sidebar");
   if (box) {
     box.innerHTML = `

@@ -39,10 +39,6 @@
         <div class="stat"><b data-count="0" id="countArticles">0</b><span id="statArticles"></span></div>
       </div>
 
-      <div class="marquee" id="marquee">
-        <div class="marquee-track" id="marqueeTrack"></div>
-      </div>
-
       <div class="scroll-hint" id="scrollHint">
         <span id="scrollText"></span><span class="arrow">↓</span>
       </div>
@@ -57,7 +53,19 @@
     <section class="page" id="articles">
       <h2 id="hArticles" class="reveal"></h2>
       <p class="section-note reveal" id="noteArticles"></p>
+      <div class="article-tools reveal">
+        <input id="articleSearch" class="article-search" type="search" autocomplete="off" />
+        <div class="filter-group">
+          <span class="filter-label" id="filterTopicLabel"></span>
+          <div class="chips" id="topicChips"></div>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label" id="filterTimeLabel"></span>
+          <select id="timeFilter" class="article-select"></select>
+        </div>
+      </div>
       <div class="articles" id="articleList"></div>
+      <p class="no-result" id="noResult"></p>
     </section>
 
     <section class="page" id="about">
@@ -88,18 +96,10 @@ $("scrollText").textContent = T("scrollHint");
 $("statProjects").textContent = T("statProjects");
 $("statLangs").textContent = T("statLangs");
 $("statArticles").textContent = T("articles");
-// 标题逐字点亮
+// 标题：包一层渐变文字（保证文字一定显示）
 function setTitle(id, text) {
-  const el = $(id);
-  el.innerHTML = '<span class="h2text"></span>';
-  const box = el.querySelector(".h2text");
-  [...text].forEach((ch, i) => {
-    const span = document.createElement("span");
-    span.className = "ch";
-    span.textContent = ch === " " ? "\u00A0" : ch;
-    span.style.transitionDelay = (i * 45) + "ms";
-    box.appendChild(span);
-  });
+  $(id).innerHTML = '<span class="h2text"></span>';
+  $(id).querySelector(".h2text").textContent = text;
 }
 setTitle("hProjects", T("sectionProjects"));
 $("noteProjects").textContent = T("projectsNote");
@@ -110,9 +110,6 @@ $("copyright").textContent = T("copyright");
 
 $("socials").innerHTML = DATA.socials.map(s =>
   `<a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>`).join("");
-
-const marqueeText = `<span>${T("marquee")}</span><b>✦</b>`;
-$("marqueeTrack").innerHTML = marqueeText + marqueeText + marqueeText + marqueeText;
 
 $("projectGrid").innerHTML = DATA.projects.map((p, idx) => `
   <article class="card reveal" data-href="${L(p.detail)}" style="transition-delay:${Math.min(idx,9)*70}ms">
@@ -125,14 +122,74 @@ $("projectGrid").innerHTML = DATA.projects.map((p, idx) => `
     </div>
   </article>`).join("");
 
-$("articleList").innerHTML = DATA.articles.map((a, idx) => `
-  <article class="article reveal" data-href="${L(a.detail)}" style="transition-delay:${idx*100}ms">
-    <div class="date">${a.date}</div>
-    <div>
-      <h3>${C(a,"title")}</h3>
-      <div class="excerpt">${C(a,"excerpt")}</div>
-    </div>
-  </article>`).join("");
+/* 文章搜索 + 筛选 */
+const articleSearch = $("articleSearch");
+const topicChips = $("topicChips");
+const timeFilter = $("timeFilter");
+let activeCat = "all";
+let activeTime = "all";
+
+// 分类标签
+$("filterTopicLabel").textContent = T("filterTopic") + "：";
+$("filterTimeLabel").textContent = T("filterTime") + "：";
+articleSearch.placeholder = T("searchPlaceholder");
+$("noResult").textContent = T("noResult");
+
+const cats = [...new Set(DATA.articles.map(a => a.cat))];
+const catLabel = c => T(c === "notes" ? "catNotes" : "catTutorial");
+topicChips.innerHTML =
+  `<button class="chip active" data-cat="all">${T("filterAll")}</button>` +
+  cats.map(c => `<button class="chip" data-cat="${c}">${catLabel(c)}</button>`).join("");
+
+// 时间筛选：按年份
+const years = [...new Set(DATA.articles.map(a => a.date.slice(0, 4)))].sort().reverse();
+timeFilter.innerHTML =
+  `<option value="all">${T("filterAll")}</option>` +
+  `<option value="newest">${T("sortNewest")}</option>` +
+  `<option value="oldest">${T("sortOldest")}</option>` +
+  years.map(y => `<option value="${y}">${y}</option>`).join("");
+
+function renderArticles() {
+  const q = articleSearch.value.trim().toLowerCase();
+  let list = DATA.articles.map((a, i) => ({ a, i }));
+
+  // 关键字搜索：标题/摘要/正文
+  if (q) {
+    list = list.filter(({ a }) => {
+      const text = (C(a, "title") + " " + C(a, "excerpt") + " " + C(a, "content")).toLowerCase();
+      return text.includes(q);
+    });
+  }
+  // 主题筛选
+  if (activeCat !== "all") list = list.filter(({ a }) => a.cat === activeCat);
+  // 时间筛选 / 排序
+  if (activeTime === "newest") list.sort((x, y) => y.a.date.localeCompare(x.a.date));
+  else if (activeTime === "oldest") list.sort((x, y) => x.a.date.localeCompare(y.a.date));
+  else if (activeTime !== "all") list = list.filter(({ a }) => a.date.startsWith(activeTime));
+
+  $("articleList").innerHTML = list.map(({ a, i }) => `
+    <article class="article reveal in" data-href="${L(a.detail)}">
+      <div class="date">${a.date}</div>
+      <div>
+        <h3>${C(a, "title")}</h3>
+        <div class="excerpt">${C(a, "excerpt")}</div>
+        <span class="article-cat">${catLabel(a.cat)}</span>
+      </div>
+    </article>`).join("");
+
+  $("noResult").style.display = list.length ? "none" : "block";
+}
+
+articleSearch.addEventListener("input", renderArticles);
+topicChips.addEventListener("click", e => {
+  const chip = e.target.closest(".chip");
+  if (!chip) return;
+  activeCat = chip.dataset.cat;
+  topicChips.querySelectorAll(".chip").forEach(c => c.classList.toggle("active", c === chip));
+  renderArticles();
+});
+timeFilter.addEventListener("change", () => { activeTime = timeFilter.value; renderArticles(); });
+renderArticles();
 
 /* 整框点击：点卡片任意位置进入详情（下载按钮除外） */
 document.addEventListener("click", e => {
@@ -190,41 +247,46 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
-/* 导航高亮：用视口中间带 IntersectionObserver（最可靠，不受滚动方式影响） */
+/* 导航高亮：scroll 位置直接计算（最可靠，支持超高区块） */
 const pagesEls = [...document.querySelectorAll("main section.page")];
 const navLinks = [...document.querySelectorAll("#sidebar nav a")];
-function setActivePage(id) {
+let currentPage = "";
+function markPage(id) {
+  if (id === currentPage) return;
+  currentPage = id;
   navLinks.forEach(a => a.classList.toggle("active", a.dataset.sec === id));
   pagesEls.forEach(p => p.classList.toggle("active", p.id === id));
-  const sec = pagesEls.find(p => p.id === id);
-  if (sec) sec.classList.add("in"); // 触发标题逐字点亮
-  const t = $("transition");
-  t.classList.remove("play");
-  void t.offsetWidth;
-  t.classList.add("play");
 }
-const navObserver = new IntersectionObserver(entries => {
-  // 选出当前与中间带相交比例最高的区块
-  const visible = entries.filter(e => e.isIntersecting);
-  if (visible.length) {
-    visible.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-    setActivePage(visible[0].target.id);
+function detectPage() {
+  // 取滚动位置下方 40% 处落在哪个区块（视口上部即视为当前页）
+  const probe = scrollY + innerHeight * 0.4;
+  let active = pagesEls[0];
+  for (const p of pagesEls) {
+    if (p.offsetTop <= probe) active = p;
   }
-}, { rootMargin: "-40% 0px -40% 0px", threshold: [0, 0.01, 0.5, 1] });
-pagesEls.forEach(p => navObserver.observe(p));
+  markPage(active.id);
+}
 
-/* 顶部进度条 + 回到顶部 + 背景滚动视差 */
+/* 顶部进度条 + 回到顶部 + 背景视差 + 导航高亮 */
 function onScroll() {
   const max = document.documentElement.scrollHeight - innerHeight;
   $("progress").style.width = (max > 0 ? (scrollY / max) * 100 : 0) + "%";
   $("toTop").classList.toggle("show", scrollY > 400);
-  // 背景随滚动缓慢视差移动（幅度明显，营造电影景深感）
   const cinema = document.getElementById("cinema");
-  if (cinema) cinema.style.transform = `translateY(${scrollY * 0.12}px)`;
+  if (cinema) cinema.style.transform = `translateY(${Math.min(scrollY * 0.06, 120)}px)`;
+  detectPage();
 }
 addEventListener("scroll", onScroll, { passive: true });
 onScroll();
 $("toTop").onclick = () => scrollTo({ top: 0, behavior: "smooth" });
+
+/* 转场特效：只在点击左侧导航链接时播放一次 */
+navLinks.forEach(a => a.addEventListener("click", () => {
+  const t = $("transition");
+  t.classList.remove("play");
+  void t.offsetWidth;
+  t.classList.add("play");
+}));
 
 /* 每个页面加超大序号 */
 document.querySelectorAll("main section.page").forEach((sec, i) => {

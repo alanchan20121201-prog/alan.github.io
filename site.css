@@ -68,6 +68,10 @@ a:hover{text-decoration:underline}
 .cinema-vignette{position:absolute;inset:0;
   background:radial-gradient(ellipse 75% 75% at 50% 45%,transparent 45%,rgba(3,5,14,.55) 100%)}
 
+/* 粒子星座画布 */
+.particle-canvas{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.85}
+@media(max-width:820px){.particle-canvas{opacity:.5}}
+
 /* 开场：丝滑淡出（无停顿、无图标） */
 .intro-curtain{position:fixed;inset:0;z-index:100;pointer-events:none;
   background:#0a0d1c;opacity:1;
@@ -77,14 +81,12 @@ a:hover{text-decoration:underline}
 /* 标题高级质感 */
 section h2{font-size:2.2rem;margin-bottom:8px;display:flex;align-items:center;gap:12px;
   font-weight:800;letter-spacing:-.5px}
-section h2 .h2text{display:inline-flex;flex-wrap:wrap}
-section h2 .h2text .ch{
-  display:inline-block;opacity:0;transform:translateY(18px) rotateX(-60deg);
+section h2 .h2text{
+  display:inline-block;
   background:linear-gradient(92deg,#fff 10%,var(--accent) 60%,var(--accent3) 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
-  background-size:200% auto;
-  transition:opacity .5s ease,transform .6s cubic-bezier(.2,1.2,.3,1)}
-.page.in h2 .h2text .ch{opacity:1;transform:none}
+  background-size:200% auto;animation:gradientShift 8s linear infinite}
+@keyframes gradientShift{to{background-position:200% center}}
 
 /* 顶部滚动进度 */
 .progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:60;
@@ -154,7 +156,7 @@ section h2 .h2text .ch{
 
 /* 每屏一页 */
 .page{min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;
-  justify-content:center;padding:80px 0 50px;position:relative;overflow:hidden}
+  justify-content:center;padding:80px 0 50px;position:relative;overflow-x:clip;overflow-y:visible}
 
 /* 首页 */
 .hero{position:relative;text-align:center;align-items:center}
@@ -277,6 +279,30 @@ button.btn{border:0}
 .article h3 a{color:var(--text)}
 .article h3 a:hover{color:var(--accent)}
 .article .excerpt{color:var(--muted);font-size:14px}
+.article-cat{display:inline-block;margin-top:8px;font-size:11px;color:var(--accent3);
+  border:1px solid rgba(199,155,255,.35);border-radius:10px;padding:1px 9px}
+
+/* 文章搜索与筛选 */
+.article-tools{display:flex;flex-direction:column;gap:14px;margin-bottom:22px}
+.article-search{width:100%;padding:12px 16px;border-radius:10px;
+  background:var(--card);border:1px solid var(--border);color:var(--text);
+  font-size:14px;font-family:inherit;backdrop-filter:blur(10px);
+  transition:border-color .25s,box-shadow .25s}
+.article-search:focus{outline:none;border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(124,140,255,.15)}
+.article-search::placeholder{color:var(--muted)}
+.filter-group{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.filter-label{color:var(--muted);font-size:13px;white-space:nowrap}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:6px 14px;border-radius:18px;font-size:13px;cursor:pointer;
+  background:transparent;border:1px solid var(--border);color:var(--muted);
+  font-family:inherit;transition:all .25s}
+.chip:hover{border-color:var(--accent2);color:var(--text)}
+.chip.active{background:linear-gradient(135deg,var(--accent),var(--accent3));
+  border-color:transparent;color:#fff;box-shadow:0 4px 16px rgba(124,140,255,.3)}
+.article-select{padding:7px 14px;border-radius:9px;background:var(--card);
+  border:1px solid var(--border);color:var(--text);font-size:13px;font-family:inherit;cursor:pointer}
+.no-result{display:none;color:var(--muted);text-align:center;padding:36px;font-size:15px}
 
 footer{border-top:1px solid var(--border);padding-top:30px;margin-top:60px;
   text-align:center;color:var(--muted);font-size:14px}

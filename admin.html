@@ -211,6 +211,7 @@ function delProject(i) {
 $("addArticle").onclick = () => {
   DATA.articles.push({
     date: new Date().toISOString().slice(0, 10),
+    cat: "notes",
     i18n: Object.fromEntries(LANGS.map(l => [l.code,
       { title: "新文章", excerpt: "摘要", content: "正文" }]))
   });
@@ -245,6 +246,7 @@ function readForm() {
     if (e) cur.excerpt = e.value;
     if (c) cur.content = c.value;
     if ($("f_date")) it.date = $("f_date").value.trim();
+    if ($("f_cat")) it.cat = $("f_cat").value;
   }
 }
 
@@ -269,7 +271,11 @@ function renderEditor() {
     ? `<label>仓库名 repo<input id="f_repo" value="${esc(it.repo)}"></label>
        <label>版本 tag（没有就留空）<input id="f_tag" value="${esc(it.tag || "")}"></label>
        <label>文件名 file（没有就留空）<input id="f_file" value="${esc(it.file || "")}"></label>`
-    : `<label>日期<input id="f_date" value="${esc(it.date)}"></label>`;
+    : `<label>日期<input id="f_date" value="${esc(it.date)}"></label>
+       <label>主题<select id="f_cat">
+         <option value="notes"${it.cat === "notes" ? " selected" : ""}>随笔 / Notes</option>
+         <option value="tutorial"${it.cat === "tutorial" ? " selected" : ""}>教程 / Tutorial</option>
+       </select></label>`;
   const fields = editState.type === "project"
     ? `<label>标题<input id="f_title" value="${esc(cur.title || "")}"></label>
        <label>介绍<textarea id="f_desc">${esc(cur.desc || "")}</textarea></label>

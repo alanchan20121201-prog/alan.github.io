@@ -30,7 +30,10 @@ const UI = {
     notFoundProject:"找不到这个项目", notFoundProjectDesc:"请从首页项目列表重新进入。",
     notFoundArticle:"找不到这篇文章", copyright:"版权所有",
     repoLabel:"GitHub 仓库：", versionLabel:"版本：", fileLabel:"文件：", downloadLabel:"下载地址：",
-    noRelease:"该项目没有发布安装包，下载为源码压缩包。"
+    noRelease:"该项目没有发布安装包，下载为源码压缩包。",
+    searchPlaceholder:"搜索文章关键字…", filterAll:"全部", filterTopic:"主题", filterTime:"时间",
+    sortNewest:"最新优先", sortOldest:"最早优先", noResult:"没有找到符合条件的文章",
+    catNotes:"随笔", catTutorial:"教程"
   },
   "zh-TW": {
     home:"首頁", scrollHint:"向下滑動查看", marquee:"歡迎來到我的作品集 · 自動化工廠 · 本機工具 · 開源專案 · ", statProjects:"專案", statLangs:"語言", statRepos:"GitHub 儲存庫", projects:"專案", articles:"我的文章", about:"關於", hello:"你好，我是",
@@ -41,7 +44,10 @@ const UI = {
     notFoundProject:"找不到這個專案", notFoundProjectDesc:"請從首頁專案列表重新進入。",
     notFoundArticle:"找不到這篇文章", copyright:"版權所有",
     repoLabel:"GitHub 儲存庫：", versionLabel:"版本：", fileLabel:"檔案：", downloadLabel:"下載位址：",
-    noRelease:"該專案沒有發布安裝包，下載為原始碼壓縮檔。"
+    noRelease:"該專案沒有發布安裝包，下載為原始碼壓縮檔。",
+    searchPlaceholder:"搜尋文章關鍵字…", filterAll:"全部", filterTopic:"主題", filterTime:"時間",
+    sortNewest:"最新優先", sortOldest:"最早優先", noResult:"找不到符合條件的文章",
+    catNotes:"隨筆", catTutorial:"教學"
   },
   "ja": {
     home:"ホーム", scrollHint:"スクロールして見る", marquee:"私のポートフォリオへようこそ · 自動化工場 · ローカルツール · オープンソース · ", statProjects:"プロジェクト", statLangs:"言語", statRepos:"GitHub リポジトリ", projects:"プロジェクト", articles:"記事", about:"概要", hello:"こんにちは、私は",
@@ -52,7 +58,10 @@ const UI = {
     notFoundProject:"プロジェクトが見つかりません", notFoundProjectDesc:"ホームのプロジェクト一覧から再度お進みください。",
     notFoundArticle:"記事が見つかりません", copyright:"無断転載を禁じます",
     repoLabel:"GitHub リポジトリ：", versionLabel:"バージョン：", fileLabel:"ファイル：", downloadLabel:"ダウンロード URL：",
-    noRelease:"インストーラーは公開されていないため、ダウンロードはソースの ZIP です。"
+    noRelease:"インストーラーは公開されていないため、ダウンロードはソースの ZIP です。",
+    searchPlaceholder:"記事をキーワードで検索…", filterAll:"すべて", filterTopic:"テーマ", filterTime:"日付",
+    sortNewest:"新しい順", sortOldest:"古い順", noResult:"条件に一致する記事がありません",
+    catNotes:"メモ", catTutorial:"チュートリアル"
   },
   "en": {
     home:"Home", scrollHint:"Scroll to explore", marquee:"WELCOME TO MY PORTFOLIO · AUTOMATION · LOCAL TOOLS · OPEN SOURCE · ", statProjects:"Projects", statLangs:"Languages", statRepos:"GitHub repos", projects:"Projects", articles:"My Articles", about:"About", hello:"Hi, I'm",
@@ -63,7 +72,10 @@ const UI = {
     notFoundProject:"Project not found", notFoundProjectDesc:"Please go back to the project list on the home page.",
     notFoundArticle:"Article not found", copyright:"All rights reserved",
     repoLabel:"GitHub repository:", versionLabel:"Version:", fileLabel:"File:", downloadLabel:"Download URL:",
-    noRelease:"No installer is published; the download is a source ZIP."
+    noRelease:"No installer is published; the download is a source ZIP.",
+    searchPlaceholder:"Search articles by keyword…", filterAll:"All", filterTopic:"Topic", filterTime:"Time",
+    sortNewest:"Newest first", sortOldest:"Oldest first", noResult:"No articles match your filters",
+    catNotes:"Notes", catTutorial:"Tutorial"
   },
   "ko": {
     home:"홈", scrollHint:"스크롤하여 보기", marquee:"제 포트폴리오에 오신 것을 환영합니다 · 자동화 공장 · 로컬 도구 · 오픈 소스 · ", statProjects:"프로젝트", statLangs:"언어", statRepos:"GitHub 저장소", projects:"프로젝트", articles:"내 글", about:"소개", hello:"안녕하세요, 저는",
@@ -74,7 +86,10 @@ const UI = {
     notFoundProject:"프로젝트를 찾을 수 없습니다", notFoundProjectDesc:"홈의 프로젝트 목록에서 다시 들어주세요.",
     notFoundArticle:"글을 찾을 수 없습니다", copyright:"판권 소유",
     repoLabel:"GitHub 저장소:", versionLabel:"버전:", fileLabel:"파일:", downloadLabel:"다운로드 주소:",
-    noRelease:"설치 프로그램이 없어 소스 ZIP을 다운로드합니다."
+    noRelease:"설치 프로그램이 없어 소스 ZIP을 다운로드합니다.",
+    searchPlaceholder:"글 제목·내용 검색…", filterAll:"전체", filterTopic:"주제", filterTime:"날짜",
+    sortNewest:"최신순", sortOldest:"오래된순", noResult:"조건에 맞는 글이 없습니다",
+    catNotes:"노트", catTutorial:"튜토리얼"
   },
   "es": {
     home:"Inicio", scrollHint:"Desliza para explorar", marquee:"BIENVENIDO A MI PORTAFOLIO · AUTOMATIZACIÓN · HERRAMIENTAS LOCALES · CÓDIGO ABIERTO · ", statProjects:"Proyectos", statLangs:"Idiomas", statRepos:"Repositorios de GitHub", projects:"Proyectos", articles:"Mis artículos", about:"Acerca de", hello:"Hola, soy",
@@ -85,7 +100,10 @@ const UI = {
     notFoundProject:"Proyecto no encontrado", notFoundProjectDesc:"Vuelve a la lista de proyectos en el inicio.",
     notFoundArticle:"Artículo no encontrado", copyright:"Todos los derechos reservados",
     repoLabel:"Repositorio de GitHub:", versionLabel:"Versión:", fileLabel:"Archivo:", downloadLabel:"URL de descarga:",
-    noRelease:"No hay instalador publicado; la descarga es un ZIP con el código fuente."
+    noRelease:"No hay instalador publicado; la descarga es un ZIP con el código fuente.",
+    searchPlaceholder:"Buscar artículos por palabra clave…", filterAll:"Todos", filterTopic:"Tema", filterTime:"Fecha",
+    sortNewest:"Más recientes", sortOldest:"Más antiguos", noResult:"No hay artículos que coincidan",
+    catNotes:"Notas", catTutorial:"Tutorial"
   }
 };
 
@@ -253,6 +271,7 @@ const DATA = {
   articles: [
     {
       date:"2026-11-17",
+      cat:"notes",
       i18n:{
         "zh-CN":{ title:"我的第一篇博客", excerpt:"这是文章的简短摘要，点开标题可以查看完整内容。", content:"这里是文章正文。你可以在 data.js 里修改 content 字段，写下完整的文章内容。" },
         "zh-TW":{ title:"我的第一篇部落格", excerpt:"這是文章的簡短摘要，點開標題可以查看完整內容。", content:"這裡是文章正文。你可以在 data.js 裡修改 content 欄位，寫下完整的文章內容。" },
@@ -264,6 +283,7 @@ const DATA = {
     },
     {
       date:"2026-11-01",
+      cat:"tutorial",
       i18n:{
         "zh-CN":{ title:"我是怎么搭建这个网站的", excerpt:"简单记录一下这个个人网站是怎么做出来的。", content:"这是一个纯静态网站，由一个 index.html、一个数据文件 data.js，以及项目详情页 detail.html 和文章详情页 article.html 组成。更新网站只需要改 data.js。" },
         "zh-TW":{ title:"我是怎麼搭建這個網站的", excerpt:"簡單記錄一下這個個人網站是怎麼做出來的。", content:"這是一個純靜態網站，由一個 index.html、一個資料檔 data.js，以及專案詳情頁 detail.html 和文章詳情頁 article.html 組成。更新網站只需要改 data.js。" },
