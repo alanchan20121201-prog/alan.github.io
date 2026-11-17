@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Alan — Portfolio</title>
 <meta name="description" content="Alan 的个人作品集：开源项目、自动化工厂、本地工具与文章。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='34' fill='none' stroke='%237c8cff' stroke-width='10'/></svg>" />
 <link rel="stylesheet" href="site.css" />
 </head>
@@ -85,14 +88,24 @@ $("scrollText").textContent = T("scrollHint");
 $("statProjects").textContent = T("statProjects");
 $("statLangs").textContent = T("statLangs");
 $("statArticles").textContent = T("articles");
-$("hProjects").innerHTML = '<span class="h2text"></span>';
-$("hProjects").querySelector(".h2text").textContent = T("sectionProjects");
+// 标题逐字点亮
+function setTitle(id, text) {
+  const el = $(id);
+  el.innerHTML = '<span class="h2text"></span>';
+  const box = el.querySelector(".h2text");
+  [...text].forEach((ch, i) => {
+    const span = document.createElement("span");
+    span.className = "ch";
+    span.textContent = ch === " " ? "\u00A0" : ch;
+    span.style.transitionDelay = (i * 45) + "ms";
+    box.appendChild(span);
+  });
+}
+setTitle("hProjects", T("sectionProjects"));
 $("noteProjects").textContent = T("projectsNote");
-$("hArticles").innerHTML = '<span class="h2text"></span>';
-$("hArticles").querySelector(".h2text").textContent = T("sectionArticles");
+setTitle("hArticles", T("sectionArticles"));
 $("noteArticles").textContent = T("articlesNote");
-$("hAbout").innerHTML = '<span class="h2text"></span>';
-$("hAbout").querySelector(".h2text").textContent = T("sectionAbout");
+setTitle("hAbout", T("sectionAbout"));
 $("copyright").textContent = T("copyright");
 
 $("socials").innerHTML = DATA.socials.map(s =>
@@ -177,35 +190,37 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
-/* 顶部进度条 + 回到顶部 + 当前页高亮（取离视口中心最近的区块） */
-const pages = [...document.querySelectorAll("main section.page")];
-let currentPage = null;
+/* 导航高亮：用视口中间带 IntersectionObserver（最可靠，不受滚动方式影响） */
+const pagesEls = [...document.querySelectorAll("main section.page")];
+const navLinks = [...document.querySelectorAll("#sidebar nav a")];
+function setActivePage(id) {
+  navLinks.forEach(a => a.classList.toggle("active", a.dataset.sec === id));
+  pagesEls.forEach(p => p.classList.toggle("active", p.id === id));
+  const sec = pagesEls.find(p => p.id === id);
+  if (sec) sec.classList.add("in"); // 触发标题逐字点亮
+  const t = $("transition");
+  t.classList.remove("play");
+  void t.offsetWidth;
+  t.classList.add("play");
+}
+const navObserver = new IntersectionObserver(entries => {
+  // 选出当前与中间带相交比例最高的区块
+  const visible = entries.filter(e => e.isIntersecting);
+  if (visible.length) {
+    visible.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+    setActivePage(visible[0].target.id);
+  }
+}, { rootMargin: "-40% 0px -40% 0px", threshold: [0, 0.01, 0.5, 1] });
+pagesEls.forEach(p => navObserver.observe(p));
+
+/* 顶部进度条 + 回到顶部 + 背景滚动视差 */
 function onScroll() {
   const max = document.documentElement.scrollHeight - innerHeight;
   $("progress").style.width = (max > 0 ? (scrollY / max) * 100 : 0) + "%";
   $("toTop").classList.toggle("show", scrollY > 400);
-
-  // 找出中心点离视口中心最近的区块
-  const center = innerHeight / 2;
-  let nearest = null, min = Infinity;
-  pages.forEach(p => {
-    const r = p.getBoundingClientRect();
-    if (r.bottom <= 0 || r.top >= innerHeight) return;
-    const d = Math.abs((r.top + r.height / 2) - center);
-    if (d < min) { min = d; nearest = p; }
-  });
-  if (nearest && nearest.id !== currentPage) {
-    currentPage = nearest.id;
-    // 直接操作导航高亮，不依赖外部函数
-    document.querySelectorAll("#sidebar nav a").forEach(a =>
-      a.classList.toggle("active", a.dataset.sec === currentPage));
-    pages.forEach(p => p.classList.toggle("active", p === nearest));
-    // 每次换页触发一次擦除转场
-    const t = $("transition");
-    t.classList.remove("play");
-    void t.offsetWidth;
-    t.classList.add("play");
-  }
+  // 背景随滚动缓慢视差移动（幅度明显，营造电影景深感）
+  const cinema = document.getElementById("cinema");
+  if (cinema) cinema.style.transform = `translateY(${scrollY * 0.12}px)`;
 }
 addEventListener("scroll", onScroll, { passive: true });
 onScroll();

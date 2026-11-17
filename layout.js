@@ -37,11 +37,10 @@
     $("navAbout").textContent = T("about");
     $("langs").innerHTML = langSwitcher();
 
-    const initial = document.body.dataset.active || "home";
     window.__markNav = key => {
       document.querySelectorAll("#sidebar nav a").forEach(a =>
         a.classList.toggle("active", a.dataset.sec === key));
     };
-    window.__markNav(initial);
+    // 不在这里设置初始高亮，交给各页面的 IntersectionObserver 处理
   }
 })();
