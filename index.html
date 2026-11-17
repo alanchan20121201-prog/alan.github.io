@@ -288,7 +288,9 @@ navLinks.forEach(a => a.addEventListener("click", e => {
   const id = a.dataset.sec;
   const target = document.getElementById(id);
   if (target) {
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    // 精确滚到区块顶部（用文档绝对位置，避免锚点/容器偏移导致露黑边）
+    const top = target.getBoundingClientRect().top + scrollY;
+    window.scrollTo({ top: top, behavior: "smooth" });
     history.replaceState(null, "", "#" + id);
   }
   const t = $("transition");
