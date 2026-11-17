@@ -10,10 +10,10 @@
     --accent:#5b8cff; --accent2:#33d6a6; --border:#2a2e38;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;scroll-snap-type:y proximity}
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Microsoft YaHei",sans-serif;
-    background:var(--bg); color:var(--text); line-height:1.6;
+    background:var(--bg); color:var(--text); line-height:1.6; overflow-x:hidden;
   }
   a{color:var(--accent);text-decoration:none}
   a:hover{text-decoration:underline}
@@ -28,22 +28,46 @@
   .langs a{font-size:12px;padding:3px 8px;border:1px solid var(--border);border-radius:10px}
   .langs a.active{color:#fff;background:var(--accent);border-color:var(--accent)}
 
-  header{padding:80px 0 60px;text-align:center;border-bottom:1px solid var(--border)}
-  header h1{font-size:2.6rem;margin-bottom:10px}
-  header h1 span{color:var(--accent)}
-  header p{color:var(--muted);font-size:1.15rem;max-width:600px;margin:0 auto 22px}
-  .socials{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-  .socials a{padding:8px 16px;border:1px solid var(--border);border-radius:20px;font-size:14px}
+  /* 每一页占满一屏，向下滚动切换到下一页 */
+  .page{min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;
+    justify-content:center;padding:100px 0 60px}
 
-  section{padding:60px 0}
-  section h2{font-size:1.8rem;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+  /* 首页 */
+  .hero{position:relative;text-align:center;align-items:center}
+  .hero .hello{color:var(--muted);font-size:1.1rem;letter-spacing:2px;
+    opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s}
+  .hero h1{font-size:clamp(3rem,11vw,6.5rem);line-height:1.2;margin:6px 0 18px;
+    letter-spacing:-2px}
+  #heroName{color:var(--accent)}
+  .caret{display:inline-block;width:3px;height:.85em;background:var(--accent2);
+    vertical-align:-.08em;margin-left:4px;animation:blink .75s step-end infinite}
+  @keyframes blink{50%{opacity:0}}
+  .hero-bio{color:var(--muted);font-size:1.15rem;max-width:600px;margin:0 auto 24px;
+    opacity:0;transform:translateY(16px);transition:opacity .8s,transform .8s}
+  .socials{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+    opacity:0;transform:translateY(16px);transition:opacity .8s,transform .8s}
+  .socials a{padding:8px 16px;border:1px solid var(--border);border-radius:20px;font-size:14px}
+  .hero .in{opacity:1;transform:none}
+  .scroll-hint{position:absolute;bottom:36px;left:0;right:0;color:var(--muted);
+    font-size:12px;letter-spacing:1px;opacity:0;transition:opacity 1s;
+    animation:bob 1.8s ease-in-out infinite}
+  .scroll-hint.in{opacity:.8}
+  .scroll-hint .arrow{display:block;font-size:22px;margin-top:4px}
+  @keyframes bob{50%{transform:translateY(9px)}}
+
+  section h2{font-size:1.9rem;margin-bottom:8px;display:flex;align-items:center;gap:10px}
   section h2::before{content:"";width:6px;height:26px;background:var(--accent);border-radius:3px}
   .section-note{color:var(--muted);font-size:14px;margin-bottom:28px}
 
+  /* 进入视口时的淡入动画 */
+  .reveal{opacity:0;transform:translateY(28px);
+    transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
   .card{background:var(--card);border:1px solid var(--border);border-radius:12px;
-    padding:20px;display:flex;flex-direction:column;transition:transform .2s,border-color .2s}
-  .card:hover{transform:translateY(-4px);border-color:var(--accent)}
+    padding:20px;display:flex;flex-direction:column;transition:transform .25s,border-color .25s,opacity .7s,translate .7s}
+  .card:hover{transform:translateY(-6px);border-color:var(--accent)}
   .card h3{font-size:1.2rem;margin-bottom:10px}
   .card h3 a{color:var(--text)}
   .card h3 a:hover{color:var(--accent)}
@@ -66,7 +90,8 @@
   .article h3 a:hover{color:var(--accent)}
   .article .excerpt{color:var(--muted);font-size:14px}
 
-  footer{border-top:1px solid var(--border);padding:30px 0;text-align:center;color:var(--muted);font-size:14px}
+  footer{border-top:1px solid var(--border);padding-top:30px;margin-top:60px;
+    text-align:center;color:var(--muted);font-size:14px}
 </style>
 </head>
 <body>
@@ -74,7 +99,7 @@
 <nav>
   <div class="wrap">
     <div class="logo" id="siteName"></div>
-    <a href="index.html" id="navHome"></a>
+    <a href="#home" id="navHome"></a>
     <a href="#projects" id="navProjects"></a>
     <a href="#articles" id="navArticles"></a>
     <a href="#about" id="navAbout"></a>
@@ -82,43 +107,42 @@
   </div>
 </nav>
 
-<header>
-  <div class="wrap">
-    <h1><span id="hello"></span> <span id="heroName"></span></h1>
-    <p id="heroBio"></p>
-    <div class="socials" id="socials"></div>
-  </div>
-</header>
-
 <main class="wrap">
-  <section id="projects">
-    <h2 id="hProjects"></h2>
-    <p class="section-note" id="noteProjects"></p>
+  <section class="page hero" id="home">
+    <div class="hello" id="hello"></div>
+    <h1><span id="heroName"></span></h1>
+    <p class="hero-bio" id="heroBio"></p>
+    <div class="socials" id="socials"></div>
+    <div class="scroll-hint" id="scrollHint">
+      <span id="scrollText"></span>
+      <span class="arrow">↓</span>
+    </div>
+  </section>
+
+  <section class="page" id="projects">
+    <h2 id="hProjects" class="reveal"></h2>
+    <p class="section-note reveal" id="noteProjects"></p>
     <div class="grid" id="projectGrid"></div>
   </section>
 
-  <section id="articles">
-    <h2 id="hArticles"></h2>
-    <p class="section-note" id="noteArticles"></p>
+  <section class="page" id="articles">
+    <h2 id="hArticles" class="reveal"></h2>
+    <p class="section-note reveal" id="noteArticles"></p>
     <div class="articles" id="articleList"></div>
   </section>
 
-  <section id="about">
-    <h2 id="hAbout"></h2>
-    <p style="color:var(--muted)" id="aboutText"></p>
+  <section class="page" id="about">
+    <h2 id="hAbout" class="reveal"></h2>
+    <p style="color:var(--muted);max-width:700px" class="reveal" id="aboutText"></p>
+    <footer>© <span id="year"></span> <span id="footerName"></span> <span id="copyright"></span></footer>
   </section>
 </main>
-
-<footer>
-  <div class="wrap">© <span id="year"></span> <span id="footerName"></span> <span id="copyright"></span></div>
-</footer>
 
 <script src="data.js"></script>
 <script src="i18n.js"></script>
 <script>
 const $ = id => document.getElementById(id);
 $("siteName").textContent = S("siteName");
-$("heroName").textContent = DATA.heroName;
 $("footerName").textContent = DATA.heroName;
 $("heroBio").textContent = S("heroBio");
 $("aboutText").textContent = S("about");
@@ -129,6 +153,7 @@ $("navProjects").textContent = T("projects");
 $("navArticles").textContent = T("articles");
 $("navAbout").textContent = T("about");
 $("hello").textContent = T("hello");
+$("scrollText").textContent = T("scrollHint");
 $("hProjects").textContent = T("sectionProjects");
 $("noteProjects").textContent = T("projectsNote");
 $("hArticles").textContent = T("sectionArticles");
@@ -140,8 +165,8 @@ $("langs").innerHTML = langSwitcher();
 $("socials").innerHTML = DATA.socials.map(s =>
   `<a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>`).join("");
 
-$("projectGrid").innerHTML = DATA.projects.map(p => `
-  <article class="card">
+$("projectGrid").innerHTML = DATA.projects.map((p, idx) => `
+  <article class="card reveal" style="transition-delay:${Math.min(idx,9)*70}ms">
     <h3><a href="${L(p.detail)}">${C(p,"title")}</a></h3>
     <p>${C(p,"desc")}</p>
     <div class="tags">${C(p,"tags").map(t=>`<span>${t}</span>`).join("")}</div>
@@ -151,14 +176,49 @@ $("projectGrid").innerHTML = DATA.projects.map(p => `
     </div>
   </article>`).join("");
 
-$("articleList").innerHTML = DATA.articles.map(a => `
-  <article class="article">
+$("articleList").innerHTML = DATA.articles.map((a, idx) => `
+  <article class="article reveal" style="transition-delay:${idx*100}ms">
     <div class="date">${a.date}</div>
     <div>
       <h3><a href="${L(a.detail)}">${C(a,"title")}</a></h3>
       <div class="excerpt">${C(a,"excerpt")}</div>
     </div>
   </article>`).join("");
+
+/* 名字逐字打出动画 */
+const nameEl = $("heroName");
+const fullName = DATA.heroName;
+nameEl.textContent = "";
+const caret = document.createElement("span");
+caret.className = "caret";
+nameEl.appendChild(caret);
+
+setTimeout(() => $("hello").classList.add("in"), 150);
+setTimeout(function type(){
+  let i = 0;
+  (function step(){
+    if (i < fullName.length) {
+      caret.insertAdjacentText("beforebegin", fullName[i]);
+      i++;
+      setTimeout(step, 280);
+    } else {
+      $("heroBio").classList.add("in");
+      $("socials").classList.add("in");
+      $("scrollHint").classList.add("in");
+    }
+  })();
+}, 450);
+
+/* 滚动进入视口时淡入 */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add("in");
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 </script>
 </body>
 </html>
