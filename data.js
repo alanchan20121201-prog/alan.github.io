@@ -162,10 +162,10 @@ const DATA = {
     {
       repo:"CoreFactory", tag:"v0.4.0", file:"CoreFactory2D.exe",
       i18n:{
-        "zh-CN":{ title:"CoreFactory", desc:"使用 AI 辅助创作的游戏项目。", tags:["C#","游戏","AI"] },
-        "zh-TW":{ title:"CoreFactory", desc:"使用 AI 輔助創作的遊戲專案。", tags:["C#","遊戲","AI"] },
-        "ja":{ title:"CoreFactory", desc:"AI を活用して制作したゲームプロジェクト。", tags:["C#","ゲーム","AI"] },
-        "en":{ title:"CoreFactory", desc:"A game project created with the help of AI.", tags:["C#","Game","AI"] }
+        "zh-CN":{ title:"星核工厂：无尽深空", desc:"2D 俯视角异星自动化工厂 × 虫潮生存游戏。采矿、传送带物流、熔炼组装、电力网与逻辑电路，建造自动运转的工厂；定时虫潮来袭时用炮塔防守，向五颗星球与无尽深空扩张。", tags:["C#","自动化","生存"] },
+        "zh-TW":{ title:"星核工廠：無盡深空", desc:"2D 俯視角異星自動化工廠 × 蟲潮生存遊戲。採礦、輸送帶物流、冶煉組裝、電力網與邏輯電路，建造自動運轉的工廠；定時蟲潮來襲時用砲塔防守，向五顆星球與無盡深空擴張。", tags:["C#","自動化","生存"] },
+        "ja":{ title:"コアファクトリー：無限の深宇宙", desc:"2D 見下ろし型の異星自動化ファクトリー × 虫潮サバイバルゲーム。採掘、ベルト輸送、製錬・組み立て、電力網と論理回路で自動工場を築き、定期的な虫の襲来はタレットで防ぎながら五つの惑星へ拡大する。", tags:["C#","自動化","サバイバル"] },
+        "en":{ title:"Core Factory: Infinite Horizon", desc:"A top-down 2D alien automation factory × bug-swarm survival game. Mine ore, build conveyor logistics, smelting and assembly lines, power grids and logic circuits, then defend your empire against timed bug waves across five planets.", tags:["C#","Automation","Survival"] }
       }
     },
     {
