@@ -10,6 +10,12 @@
 </head>
 <body data-active="home">
 
+<div class="intro-curtain" id="introCurtain">
+  <div class="half top"></div>
+  <div class="intro-logo" id="introLogo">⚡</div>
+  <div class="half bottom"></div>
+</div>
+
 <div class="progress" id="progress"></div>
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
@@ -70,6 +76,9 @@
 <script src="i18n.js"></script>
 <script src="layout.js"></script>
 <script>
+/* 开场帷幕：加载后自动拉开 */
+addEventListener("load", () => setTimeout(() => document.getElementById("introCurtain").classList.add("open"), 350));
+
 const $ = id => document.getElementById(id);
 $("footerName").textContent = DATA.heroName;
 $("heroBio").textContent = S("heroBio");
@@ -80,11 +89,14 @@ $("scrollText").textContent = T("scrollHint");
 $("statProjects").textContent = T("statProjects");
 $("statLangs").textContent = T("statLangs");
 $("statArticles").textContent = T("articles");
-$("hProjects").textContent = T("sectionProjects");
+$("hProjects").innerHTML = '<span class="h2text"></span>';
+$("hProjects").querySelector(".h2text").textContent = T("sectionProjects");
 $("noteProjects").textContent = T("projectsNote");
-$("hArticles").textContent = T("sectionArticles");
+$("hArticles").innerHTML = '<span class="h2text"></span>';
+$("hArticles").querySelector(".h2text").textContent = T("sectionArticles");
 $("noteArticles").textContent = T("articlesNote");
-$("hAbout").textContent = T("sectionAbout");
+$("hAbout").innerHTML = '<span class="h2text"></span>';
+$("hAbout").querySelector(".h2text").textContent = T("sectionAbout");
 $("copyright").textContent = T("copyright");
 
 $("socials").innerHTML = DATA.socials.map(s =>
@@ -161,11 +173,33 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
-/* 顶部进度条 + 回到顶部 */
+/* 顶部进度条 + 回到顶部 + 当前页高亮（取离视口中心最近的区块） */
+const pages = [...document.querySelectorAll("main section.page")];
+let currentPage = null;
 function onScroll() {
   const max = document.documentElement.scrollHeight - innerHeight;
   $("progress").style.width = (max > 0 ? (scrollY / max) * 100 : 0) + "%";
   $("toTop").classList.toggle("show", scrollY > 400);
+
+  // 找出中心点离视口中心最近的区块
+  const center = innerHeight / 2;
+  let nearest = null, min = Infinity;
+  pages.forEach(p => {
+    const r = p.getBoundingClientRect();
+    if (r.bottom <= 0 || r.top >= innerHeight) return;
+    const d = Math.abs((r.top + r.height / 2) - center);
+    if (d < min) { min = d; nearest = p; }
+  });
+  if (nearest && nearest.id !== currentPage) {
+    currentPage = nearest.id;
+    if (window.__markNav) window.__markNav(currentPage);
+    pages.forEach(p => p.classList.toggle("active", p === nearest));
+    // 每次换页触发一次擦除转场
+    const t = $("transition");
+    t.classList.remove("play");
+    void t.offsetWidth;
+    t.classList.add("play");
+  }
 }
 addEventListener("scroll", onScroll, { passive: true });
 onScroll();
@@ -193,20 +227,6 @@ if (matchMedia("(hover:hover) and (pointer:fine)").matches) {
     requestAnimationFrame(follow);
   })();
 }
-
-/* 页面切换转场特效 */
-const transition = $("transition");
-const pageObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    e.target.classList.add("active");
-    // 触发擦除转场（重播动画）
-    transition.classList.remove("play");
-    void transition.offsetWidth;
-    transition.classList.add("play");
-  });
-}, { threshold: 0.55 });
-document.querySelectorAll("main section.page").forEach(s => pageObserver.observe(s));
 
 /* 卡片 3D 倾斜 + 内部发光跟随鼠标 */
 if (matchMedia("(hover:hover) and (pointer:fine)").matches) {
