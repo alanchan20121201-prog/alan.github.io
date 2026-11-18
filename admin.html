@@ -188,7 +188,10 @@ $("save").onclick = async () => {
     const j = await r.json().catch(() => ({}));
     let msg = j.message || r.status;
     if (/not accessible/i.test(msg)) {
-      msg = "你的 Token 只有「读取」权限，没有写入权限。请到 GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens → 你的 Token → Repository access 选本仓库 → 展开下方「储存库权限」→ 把 Contents(内容) 改为 Read and write → 保存。若仍失败，点「清除旧 Token」重新生成。";
+      const fine = /^github_pat_/.test(token);
+      msg = fine
+        ? "你的 Fine-grained Token 缺写入权限。请到 GitHub → 你的 Token 页面 → 「储存库权限(Repository permissions)」区域往下找 Contents(内容) → 设为 Read and write(读写) → 保存。注意：即使 Metadata 显示读写也不够，必须单独设置 Contents。改完点「清除旧 Token」重新填入。"
+        : "你的 Classic Token 缺写入权限。请到 GitHub → Token 设置 → 勾选 repo（完整仓库权限）→ 保存。改完点「清除旧 Token」重新填入。";
     }
     status("保存失败：" + msg, false);
   }
