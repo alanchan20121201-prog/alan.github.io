@@ -17,13 +17,13 @@
 
   const COUNT = () => {
     const area = W * H;
-    return Math.max(28, Math.min(110, Math.round(area / 16000)));
+    return Math.max(18, Math.min(45, Math.round(area / 30000)));
   };
-  const LINK_DIST = 130;
-  const MOUSE_DIST = 190;
+  const LINK_DIST = 115;
+  const MOUSE_DIST = 150;
 
   function resize() {
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     W = window.innerWidth;
     H = window.innerHeight;
     canvas.width = W * dpr;
@@ -51,7 +51,12 @@
     particles = Array.from({ length: n }, makeParticle);
   }
 
-  function step() {
+  var lastT = 0, paused = false;
+  function step(t) {
+    requestAnimationFrame(step);
+    if (paused || document.hidden) return;
+    if (t - lastT < 33) return; // 30fps 上限
+    lastT = t;
     ctx.clearRect(0, 0, W, H);
 
     for (const p of particles) {
@@ -100,9 +105,15 @@
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
       ctx.fill();
     }
-
-    requestAnimationFrame(step);
   }
+
+  // 滚动时暂停粒子，停稳恢复
+  var scrollTimer;
+  window.addEventListener("scroll", function () {
+    paused = true;
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function () { paused = false; }, 180);
+  }, { passive: true });
 
   window.addEventListener("resize", resize, { passive: true });
   if (!reduced) {

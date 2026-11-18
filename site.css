@@ -201,7 +201,7 @@ section h2 .h2text{
 
 /* 每屏一页 */
 .page{min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;
-  justify-content:center;padding:80px 0 50px;position:relative;overflow-x:clip;overflow-y:visible}
+  justify-content:center;padding:80px 0 50px;position:relative;overflow:visible}
 
 /* 首页 */
 .hero{position:relative;text-align:center;align-items:center}

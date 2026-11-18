@@ -32,22 +32,20 @@
     "}",
     "float fbm(vec2 p){",
     "  float v=0.0, a=0.5;",
-    "  for(int i=0;i<5;i++){ v+=a*noise(p); p*=2.02; a*=0.5; }",
+    "  for(int i=0;i<3;i++){ v+=a*noise(p); p*=2.03; a*=0.5; }",
     "  return v;",
     "}",
     "void main(){",
     "  vec2 uv=vUv;",
     "  vec2 p=uv*vec2(uRes.x/uRes.y,1.0);",
-    "  float t=uTime*0.06;",
-    "  float n1=fbm(p*2.0+vec2(t,-t*0.7));",
-    "  float n2=fbm(p*3.0+vec2(n1*1.6+t*0.4,n1*1.4));",
-    "  float flow=fbm(p*2.2+n2*1.3+vec2(-t*0.5,t*0.3));",
+    "  float t=uTime*0.05;",
+    "  float n=fbm(p*2.2+vec2(t,-t*0.6));",
+    "  float flow=fbm(p*1.6+n*0.8);",
     "  vec3 col=mix(vec3(0.031,0.039,0.09), vec3(0.070,0.105,0.26), flow);",
-    "  col=mix(col, vec3(0.36,0.16,0.56), smoothstep(0.58,0.88,flow)*0.55);",
-    "  col=mix(col, vec3(0.08,0.44,0.44), smoothstep(0.52,0.84,n2)*0.40);",
-    "  col+=vec3(0.55,0.42,0.92)*pow(max(flow-0.72,0.0),2.0)*1.4;",
+    "  col=mix(col, vec3(0.34,0.15,0.52), smoothstep(0.58,0.88,flow)*0.5);",
+    "  col=mix(col, vec3(0.07,0.40,0.40), smoothstep(0.52,0.84,n)*0.35);",
     "  float d=distance(uv,uMouse);",
-    "  col+=vec3(0.10,0.12,0.24)*exp(-d*3.5)*0.55;",
+    "  col+=vec3(0.08,0.10,0.20)*exp(-d*3.5)*0.4;",
     "  col*=1.0-0.34*length(uv-0.5);",
     "  gl_FragColor=vec4(col,1.0);",
     "}"
@@ -91,8 +89,8 @@
 
   var W = 0, H = 0;
   function resize() {
-    // 半分辨率渲染，CSS 放大 —— 省 GPU
-    var scale = 0.5;
+    // 低分辨率渲染，CSS 放大 —— 大幅省 GPU
+    var scale = 0.3;
     W = Math.max(1, Math.round(window.innerWidth * scale));
     H = Math.max(1, Math.round(window.innerHeight * scale));
     canvas.width = W;
@@ -103,10 +101,11 @@
   window.addEventListener("resize", resize, { passive: true });
   resize();
 
-  var start = performance.now(), last = 0;
+  var start = performance.now(), last = 0, paused = false;
   function frame(now) {
     requestAnimationFrame(frame);
-    if (now - last < 33) return; // 30fps 上限
+    if (paused || document.hidden) return; // 不可见/滚动时暂停，省 GPU
+    if (now - last < 50) return; // 20fps 上限
     last = now;
     mouse.x += (tx - mouse.x) * 0.05;
     mouse.y += (ty - mouse.y) * 0.05;
@@ -116,8 +115,11 @@
   }
   requestAnimationFrame(frame);
 
-  // 页面不可见时暂停
-  document.addEventListener("visibilitychange", function () {
-    if (document.hidden) gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-  });
+  // 滚动时暂停背景渲染，停稳后恢复（解决滑动卡顿 + 省 GPU）
+  var scrollTimer;
+  window.addEventListener("scroll", function () {
+    paused = true;
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function () { paused = false; }, 180);
+  }, { passive: true });
 })();
