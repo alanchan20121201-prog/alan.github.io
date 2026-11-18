@@ -33,7 +33,7 @@ const UI = {
     noRelease:"该项目没有发布安装包，下载为源码压缩包。",
     searchPlaceholder:"搜索文章关键字…", filterAll:"全部", filterTopic:"主题", filterTime:"时间",
     sortNewest:"最新优先", sortOldest:"最早优先", noResult:"没有找到符合条件的文章",
-    catNotes:"随笔", catTutorial:"教程"
+    catNotes:"随笔", catTutorial:"教程", entryProjectsDesc:"浏览开源项目与下载", entryArticlesDesc:"阅读文章与笔记", entryAboutDesc:"了解这个网站与作者"
   },
   "zh-TW": {
     home:"首頁", scrollHint:"向下滑動查看", marquee:"歡迎來到作品集 · 自動化工廠 · 本機工具 · 開源專案 · ", statProjects:"專案", statLangs:"語言", statRepos:"GitHub 儲存庫", projects:"專案", articles:"文章", about:"關於", hello:"歡迎來到",
@@ -47,7 +47,7 @@ const UI = {
     noRelease:"該專案沒有發布安裝包，下載為原始碼壓縮檔。",
     searchPlaceholder:"搜尋文章關鍵字…", filterAll:"全部", filterTopic:"主題", filterTime:"時間",
     sortNewest:"最新優先", sortOldest:"最早優先", noResult:"找不到符合條件的文章",
-    catNotes:"隨筆", catTutorial:"教學"
+    catNotes:"隨筆", catTutorial:"教學", entryProjectsDesc:"瀏覽開源專案與下載", entryArticlesDesc:"閱讀文章與筆記", entryAboutDesc:"瞭解這個網站與作者"
   },
   "ja": {
     home:"ホーム", scrollHint:"スクロールして見る", marquee:"ポートフォリオへようこそ · 自動化工場 · ローカルツール · オープンソース · ", statProjects:"プロジェクト", statLangs:"言語", statRepos:"GitHub リポジトリ", projects:"プロジェクト", articles:"記事", about:"概要", hello:"ようこそ",
@@ -61,7 +61,7 @@ const UI = {
     noRelease:"インストーラーは公開されていないため、ダウンロードはソースの ZIP です。",
     searchPlaceholder:"記事をキーワードで検索…", filterAll:"すべて", filterTopic:"テーマ", filterTime:"日付",
     sortNewest:"新しい順", sortOldest:"古い順", noResult:"条件に一致する記事がありません",
-    catNotes:"メモ", catTutorial:"チュートリアル"
+    catNotes:"メモ", catTutorial:"チュートリアル", entryProjectsDesc:"オープンソースとダウンロード", entryArticlesDesc:"記事とメモを読む", entryAboutDesc:"サイトと作者について"
   },
   "en": {
     home:"Home", scrollHint:"Scroll to explore", marquee:"WELCOME TO THE PORTFOLIO · AUTOMATION · LOCAL TOOLS · OPEN SOURCE · ", statProjects:"Projects", statLangs:"Languages", statRepos:"GitHub repos", projects:"Projects", articles:"Articles", about:"About", hello:"Welcome to",
@@ -75,7 +75,7 @@ const UI = {
     noRelease:"No installer is published; the download is a source ZIP.",
     searchPlaceholder:"Search articles by keyword…", filterAll:"All", filterTopic:"Topic", filterTime:"Time",
     sortNewest:"Newest first", sortOldest:"Oldest first", noResult:"No articles match your filters",
-    catNotes:"Notes", catTutorial:"Tutorial"
+    catNotes:"Notes", catTutorial:"Tutorial", entryProjectsDesc:"Browse open-source projects", entryArticlesDesc:"Read articles and notes", entryAboutDesc:"Learn about the site"
   },
   "ko": {
     home:"홈", scrollHint:"스크롤하여 보기", marquee:"포트폴리오에 오신 것을 환영합니다 · 자동화 공장 · 로컬 도구 · 오픈 소스 · ", statProjects:"프로젝트", statLangs:"언어", statRepos:"GitHub 저장소", projects:"프로젝트", articles:"글", about:"소개", hello:"환영합니다",
@@ -89,7 +89,7 @@ const UI = {
     noRelease:"설치 프로그램이 없어 소스 ZIP을 다운로드합니다.",
     searchPlaceholder:"글 제목·내용 검색…", filterAll:"전체", filterTopic:"주제", filterTime:"날짜",
     sortNewest:"최신순", sortOldest:"오래된순", noResult:"조건에 맞는 글이 없습니다",
-    catNotes:"노트", catTutorial:"튜토리얼"
+    catNotes:"노트", catTutorial:"튜토리얼", entryProjectsDesc:"오픈 소스 프로젝트 보기", entryArticlesDesc:"글과 메모 읽기", entryAboutDesc:"사이트와 작성자 소개"
   },
   "es": {
     home:"Inicio", scrollHint:"Desliza para explorar", marquee:"BIENVENIDO AL PORTAFOLIO · AUTOMATIZACIÓN · HERRAMIENTAS LOCALES · CÓDIGO ABIERTO · ", statProjects:"Proyectos", statLangs:"Idiomas", statRepos:"Repositorios de GitHub", projects:"Proyectos", articles:"Artículos", about:"Acerca de", hello:"Bienvenido a",
@@ -103,7 +103,7 @@ const UI = {
     noRelease:"No hay instalador publicado; la descarga es un ZIP con el código fuente.",
     searchPlaceholder:"Buscar artículos por palabra clave…", filterAll:"Todos", filterTopic:"Tema", filterTime:"Fecha",
     sortNewest:"Más recientes", sortOldest:"Más antiguos", noResult:"No hay artículos que coincidan",
-    catNotes:"Notas", catTutorial:"Tutorial"
+    catNotes:"Notas", catTutorial:"Tutorial", entryProjectsDesc:"Explora proyectos de código abierto", entryArticlesDesc:"Lee artículos y notas", entryAboutDesc:"Conoce el sitio"
   }
 };
 

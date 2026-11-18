@@ -21,6 +21,17 @@
     document.body.insertBefore(cinema, document.body.firstChild);
   }
 
+  /* 原创 WebGL 流体极光背景（桌面端，手机自动回退 CSS） */
+  if (!document.getElementById("shaderCanvas")) {
+    const cv = document.createElement("canvas");
+    cv.id = "shaderCanvas";
+    cv.className = "shader-canvas";
+    document.body.insertBefore(cv, document.body.firstChild);
+    const sc = document.createElement("script");
+    sc.src = "shader-bg.js";
+    document.body.appendChild(sc);
+  }
+
   /* 粒子星座画布（所有页面通用） */
   if (!document.getElementById("particleCanvas")) {
     const cv = document.createElement("canvas");

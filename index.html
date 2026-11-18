@@ -39,6 +39,24 @@
         <div class="stat"><b data-count="0" id="countArticles">0</b><span id="statArticles"></span></div>
       </div>
 
+      <div class="entry-cards" id="entryCards">
+        <button class="entry-card" data-target="projects" type="button">
+          <span class="entry-icon">◇</span>
+          <span class="entry-title" id="entryProjectsTitle"></span>
+          <span class="entry-desc" id="entryProjectsDesc"></span>
+        </button>
+        <button class="entry-card" data-target="articles" type="button">
+          <span class="entry-icon">✎</span>
+          <span class="entry-title" id="entryArticlesTitle"></span>
+          <span class="entry-desc" id="entryArticlesDesc"></span>
+        </button>
+        <button class="entry-card" data-target="about" type="button">
+          <span class="entry-icon">◈</span>
+          <span class="entry-title" id="entryAboutTitle"></span>
+          <span class="entry-desc" id="entryAboutDesc"></span>
+        </button>
+      </div>
+
       <div class="scroll-hint" id="scrollHint">
         <span id="scrollText"></span><span class="arrow">↓</span>
       </div>
@@ -96,6 +114,13 @@ $("scrollText").textContent = T("scrollHint");
 $("statProjects").textContent = T("statProjects");
 $("statLangs").textContent = T("statLangs");
 $("statArticles").textContent = T("articles");
+// 首页直达入口
+$("entryProjectsTitle").textContent = T("projects");
+$("entryProjectsDesc").textContent = T("entryProjectsDesc");
+$("entryArticlesTitle").textContent = T("articles");
+$("entryArticlesDesc").textContent = T("entryArticlesDesc");
+$("entryAboutTitle").textContent = T("about");
+$("entryAboutDesc").textContent = T("entryAboutDesc");
 // 标题：包一层渐变文字（保证文字一定显示）
 function setTitle(id, text) {
   $(id).innerHTML = '<span class="h2text"></span>';
@@ -220,23 +245,24 @@ nameEl.textContent = "";
 const caret = document.createElement("span");
 caret.className = "caret";
 nameEl.appendChild(caret);
-setTimeout(() => $("hello").classList.add("in"), 120);
+setTimeout(() => $("hello").classList.add("in"), 80);
 setTimeout(function () {
   let i = 0;
   (function step() {
     if (i < fullName.length) {
       caret.insertAdjacentText("beforebegin", fullName[i]);
       i++;
-      setTimeout(step, 230);
+      setTimeout(step, 140);
     } else {
       $("heroBio").classList.add("in");
       $("socials").classList.add("in");
       $("stats").classList.add("in");
+      $("entryCards").classList.add("in");
       $("scrollHint").classList.add("in");
       document.querySelectorAll(".stat b").forEach(countUp);
     }
   })();
-}, 400);
+}, 250);
 
 /* 滚动淡入 */
 const io = new IntersectionObserver(entries => {
@@ -282,22 +308,37 @@ addEventListener("scroll", onScroll, { passive: true });
 onScroll();
 $("toTop").onclick = () => scrollTo({ top: 0, behavior: "smooth" });
 
-/* 导航链接：平滑滚动到对应区块（不重载页面）+ 转场特效 */
-navLinks.forEach(a => a.addEventListener("click", e => {
-  e.preventDefault();
-  const id = a.dataset.sec;
+/* 平滑滚动到区块（公共） */
+function goToSection(id) {
   const target = document.getElementById(id);
-  if (target) {
-    // 精确滚到区块顶部（用文档绝对位置，避免锚点/容器偏移导致露黑边）
-    const top = target.getBoundingClientRect().top + scrollY;
-    window.scrollTo({ top: top, behavior: "smooth" });
-    history.replaceState(null, "", "#" + id);
-  }
+  if (!target) return;
+  const top = target.getBoundingClientRect().top + scrollY;
+  window.scrollTo({ top: top, behavior: "smooth" });
+  history.replaceState(null, "", "#" + id);
   const t = $("transition");
   t.classList.remove("play");
   void t.offsetWidth;
   t.classList.add("play");
+}
+/* 导航链接 */
+navLinks.forEach(a => a.addEventListener("click", e => {
+  e.preventDefault();
+  goToSection(a.dataset.sec);
 }));
+/* 首页直达入口卡片 */
+document.querySelectorAll(".entry-card").forEach(card =>
+  card.addEventListener("click", () => goToSection(card.dataset.target)));
+
+/* 网址深链接：带 #xxx 打开时定位到对应区块（等布局稳定） */
+function goToHash() {
+  const id = location.hash.slice(1);
+  if (id && document.getElementById(id)) {
+    const top = document.getElementById(id).getBoundingClientRect().top + scrollY;
+    window.scrollTo({ top: top, behavior: "auto" });
+  }
+}
+addEventListener("load", () => setTimeout(goToHash, 100));
+addEventListener("hashchange", goToHash);
 
 /* 每个页面加超大序号 */
 document.querySelectorAll("main section.page").forEach((sec, i) => {
