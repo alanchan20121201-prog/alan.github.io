@@ -1129,42 +1129,6 @@ const DATA = {
           "content": "Este es un sitio estático formado por index.html, el archivo de datos data.js, la página de detalle de proyectos detail.html y la de artículos article.html. Para actualizarlo, basta con editar data.js."
         }
       }
-    },
-    {
-      "date": "2026-11-18",
-      "cat": "notes",
-      "i18n": {
-        "zh-CN": {
-          "title": "新文章",
-          "excerpt": "摘要",
-          "content": "正文"
-        },
-        "zh-TW": {
-          "title": "新文章",
-          "excerpt": "摘要",
-          "content": "正文"
-        },
-        "ja": {
-          "title": "新文章",
-          "excerpt": "摘要",
-          "content": "正文"
-        },
-        "en": {
-          "title": "新文章",
-          "excerpt": "摘要",
-          "content": "正文"
-        },
-        "ko": {
-          "title": "新文章",
-          "excerpt": "摘要",
-          "content": "正文"
-        },
-        "es": {
-          "title": "新文章",
-          "excerpt": "摘要",
-          "content": "正文"
-        }
-      }
     }
   ]
 };
