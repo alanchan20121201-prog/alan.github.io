@@ -39,15 +39,17 @@
 
   <div class="panel">
     <label>GitHub Token（只需填一次，保存在你自己的浏览器里）
-      <input type="password" id="token" placeholder="ghp_... 或 github_pat_..." />
+      <span style="display:flex;gap:6px;align-items:center">
+        <input type="password" id="token" placeholder="ghp_... 或 github_pat_..." style="flex:1" />
+        <button type="button" id="toggleToken" title="显示/隐藏 Token" style="padding:6px 10px">显示</button>
+      </span>
     </label>
     <button class="primary" id="connect">连接 GitHub</button>
     <button id="clearToken" style="margin-left:8px">清除旧 Token</button>
     <span id="status"></span>
     <p class="tip" style="margin:12px 0 0" id="tokenHelp">
-      Token 需要写入权限：<b>ghp_ 开头</b>（Classic）请勾选 <b>repo</b>；
-      <b>github_pat_ 开头</b>（Fine-grained）请给本仓库 <b>Contents: read and write</b> 权限。
-      仓库改名前创建的 Token 需要重新授权。请不要把 Token 发给别人。
+      <b>仓库要有写入权限才能保存。</b>Fine-grained Token（github_pat_）：在 Token 页面下方「储存库权限」把 <b>Contents（内容）</b> 设为 <b>Read and write</b>（只勾上面的「读取资料库权限」还不够）。
+      Classic Token（ghp_）：勾选 <b>repo</b>。仓库改名前创建的 Token 需重新授权。Token 只存你浏览器，不会上传。
     </p>
   </div>
 
@@ -128,6 +130,16 @@ $("clearToken").onclick = () => {
   status("已清除旧 Token，请重新填写");
 };
 
+// 显示/隐藏 Token，方便查看和复制
+$("toggleToken").onclick = () => {
+  const inp = $("token");
+  const show = inp.type === "password";
+  inp.type = show ? "text" : "password";
+  $("toggleToken").textContent = show ? "隐藏" : "显示";
+};
+// 点击输入框自动全选，方便复制
+$("token").onclick = e => e.target.select();
+
 function b64(str) {
   return btoa(unescape(encodeURIComponent(str)));
 }
@@ -176,7 +188,7 @@ $("save").onclick = async () => {
     const j = await r.json().catch(() => ({}));
     let msg = j.message || r.status;
     if (/not accessible/i.test(msg)) {
-      msg = "Token 没有本仓库的写权限。请到 GitHub → 你的 Token 设置：Classic 勾选 repo；Fine-grained 给本仓库 Contents: read and write。或点「清除旧 Token」重新生成。";
+      msg = "你的 Token 只有「读取」权限，没有写入权限。请到 GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens → 你的 Token → Repository access 选本仓库 → 展开下方「储存库权限」→ 把 Contents(内容) 改为 Read and write → 保存。若仍失败，点「清除旧 Token」重新生成。";
     }
     status("保存失败：" + msg, false);
   }
