@@ -273,7 +273,7 @@ const io = new IntersectionObserver(entries => {
 document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
 /* 导航高亮：scroll 位置直接计算（最可靠，支持超高区块） */
-const pagesEls = [...document.querySelectorAll("main section.page")];
+const pagesEls = [...document.querySelectorAll(".main section.page")];
 const navLinks = [...document.querySelectorAll("#sidebar nav a")];
 let currentPage = "";
 function markPage(id) {
@@ -341,7 +341,7 @@ addEventListener("load", () => setTimeout(goToHash, 100));
 addEventListener("hashchange", goToHash);
 
 /* 每个页面加超大序号 */
-document.querySelectorAll("main section.page").forEach((sec, i) => {
+document.querySelectorAll(".main section.page").forEach((sec, i) => {
   const num = document.createElement("span");
   num.className = "page-num";
   num.textContent = String(i + 1).padStart(2, "0");

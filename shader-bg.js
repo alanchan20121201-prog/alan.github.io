@@ -90,7 +90,7 @@
   var W = 0, H = 0;
   function resize() {
     // 低分辨率渲染，CSS 放大 —— 大幅省 GPU
-    var scale = 0.3;
+    var scale = 0.25;
     W = Math.max(1, Math.round(window.innerWidth * scale));
     H = Math.max(1, Math.round(window.innerHeight * scale));
     canvas.width = W;
@@ -105,7 +105,7 @@
   function frame(now) {
     requestAnimationFrame(frame);
     if (paused || document.hidden) return; // 不可见/滚动时暂停，省 GPU
-    if (now - last < 50) return; // 20fps 上限
+    if (now - last < 85) return; // 12fps 上限，大幅省 GPU
     last = now;
     mouse.x += (tx - mouse.x) * 0.05;
     mouse.y += (ty - mouse.y) * 0.05;
