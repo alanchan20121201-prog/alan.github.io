@@ -98,6 +98,24 @@ let editState = null;
 let basicLang = "zh-CN";
 $("token").value = token;
 
+/* 本地草稿：即使 GitHub 保存失败，刷新页面也能找回改动 */
+(function restoreDraft() {
+  try {
+    const raw = localStorage.getItem("site-admin-draft");
+    if (!raw) return;
+    const d = JSON.parse(raw);
+    if (d && d.DATA && d.DATA.projects && d.DATA.articles) {
+      DATA.projects = d.DATA.projects;
+      DATA.articles = d.DATA.articles;
+    }
+  } catch (e) { /* 草稿损坏就忽略 */ }
+})();
+function saveDraft() {
+  try {
+    localStorage.setItem("site-admin-draft", JSON.stringify({ DATA: DATA }));
+  } catch (e) { /* 超出容量就忽略 */ }
+}
+
 function status(msg, ok) {
   $("status").textContent = msg;
   $("status").className = ok === false ? "err" : "ok";
@@ -193,7 +211,7 @@ $("save").onclick = async () => {
         ? "你的令牌缺少写入文件的权限。请在令牌设置页找到「+ Add permissions（新增权限）」按钮点开，在列表里找到「Contents／內容」，把它的 Access 改成「Read and write／讀寫」，然后按「更新」。改完回到本页点「清除旧令牌」重新填入。"
         : "你的令牌缺少写入权限。请到 GitHub 令牌设置页勾选「repo（完整仓库权限）」并保存。改完点「清除旧令牌」重新填入。";
     }
-    status("保存失败：" + msg, false);
+    status("⚠ 保存失败，改动没有上传！" + msg + " 在修好前，请先点「下载 data.js（备用）」把改动存下来，否则刷新页面就会丢失。", false);
   }
 };
 
@@ -218,6 +236,7 @@ function renderLists() {
     `<button onclick="delArticle(${i})">删除</button></div>`).join("");
 
   $("preview").textContent = buildSource();
+  saveDraft();
 }
 
 document.querySelectorAll(".tabs button").forEach(b => {
