@@ -42,8 +42,13 @@
       <input type="password" id="token" placeholder="ghp_... 或 github_pat_..." />
     </label>
     <button class="primary" id="connect">连接 GitHub</button>
+    <button id="clearToken" style="margin-left:8px">清除旧 Token</button>
     <span id="status"></span>
-    <p class="tip" style="margin:12px 0 0">Token 需要 <b>repo / Contents: read and write</b> 权限，且只对这一个仓库授权即可。请不要把 Token 发给别人，也不要写进网站文件。</p>
+    <p class="tip" style="margin:12px 0 0" id="tokenHelp">
+      Token 需要写入权限：<b>ghp_ 开头</b>（Classic）请勾选 <b>repo</b>；
+      <b>github_pat_ 开头</b>（Fine-grained）请给本仓库 <b>Contents: read and write</b> 权限。
+      仓库改名前创建的 Token 需要重新授权。请不要把 Token 发给别人。
+    </p>
   </div>
 
   <div class="tabs">
@@ -104,11 +109,24 @@ async function connect() {
   const r = await fetch(API, {
     headers: { Authorization: "Bearer " + token, Accept: "application/vnd.github+json" }
   });
-  if (!r.ok) { status("连接失败：" + r.status, false); return false; }
+  if (!r.ok) {
+    let hint = "";
+    if (r.status === 404) hint = "（仓库不存在或无访问权限）";
+    else if (r.status === 401) hint = "（Token 无效）";
+    else if (r.status === 403) hint = "（Token 权限不足或已过期）";
+    status("连接失败：" + r.status + hint, false); return false;
+  }
   sha = (await r.json()).sha;
   status("已连接，可以编辑");
   return true;
 }
+
+$("clearToken").onclick = () => {
+  localStorage.removeItem("site-admin-token");
+  $("token").value = "";
+  token = ""; sha = "";
+  status("已清除旧 Token，请重新填写");
+};
 
 function b64(str) {
   return btoa(unescape(encodeURIComponent(str)));
@@ -156,7 +174,11 @@ $("save").onclick = async () => {
     status("已保存，约 1 分钟后网站更新");
   } else {
     const j = await r.json().catch(() => ({}));
-    status("保存失败：" + (j.message || r.status), false);
+    let msg = j.message || r.status;
+    if (/not accessible/i.test(msg)) {
+      msg = "Token 没有本仓库的写权限。请到 GitHub → 你的 Token 设置：Classic 勾选 repo；Fine-grained 给本仓库 Contents: read and write。或点「清除旧 Token」重新生成。";
+    }
+    status("保存失败：" + msg, false);
   }
 };
 
