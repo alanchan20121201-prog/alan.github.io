@@ -33,8 +33,9 @@
     document.body.appendChild(sc);
   }
 
-  /* 粒子星座画布（所有页面通用） */
-  if (!document.getElementById("particleCanvas")) {
+  /* 粒子星座画布默认关闭（Canvas 每帧绘制占 GPU）；?particles=1 开启 */
+  if (new URLSearchParams(location.search).get("particles") === "1" && !document.getElementById("particleCanvas")) {
+    document.body.classList.add("show-particles");
     const cv = document.createElement("canvas");
     cv.id = "particleCanvas";
     cv.className = "particle-canvas";
