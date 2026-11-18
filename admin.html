@@ -48,8 +48,8 @@
     <button id="clearToken" style="margin-left:8px">清除旧令牌</button>
     <span id="status"></span>
     <p class="tip" style="margin:12px 0 0" id="tokenHelp">
-      <b>仓库必须有写入权限才能保存。</b>如果你用的是以 <b>github_pat_</b> 开头的令牌：在令牌设置页面找到「储存库权限」，把 <b>内容（Contents）</b> 这一项设为 <b>读写（Read and write）</b>——只勾上面的「读取资料库权限」是不够的。
-      如果是以 <b>ghp_</b> 开头的令牌：请勾选 <b>repo（完整仓库权限）</b>。仓库改名前创建的令牌需要重新授权。令牌只保存在你自己的浏览器里，不会上传。
+      <b>令牌必须有写入文件的权限才能保存。</b>如果你用的是以 <b>github_pat_</b> 开头的令牌：在令牌设置页的「权限」区域点右上角「<b>+ Add permissions</b>」，在列表里添加 <b>Contents／內容</b>，并把它的权限设为 <b>讀寫（Read and write）</b>，再按「更新」。只设置 Actions、Metadata 是不够的。
+      如果是以 <b>ghp_</b> 开头的令牌：请勾选 <b>repo（完整仓库权限）</b>。令牌只保存在你自己的浏览器里，不会上传。
     </p>
   </div>
 
@@ -190,8 +190,8 @@ $("save").onclick = async () => {
     if (/not accessible/i.test(msg)) {
       const fine = /^github_pat_/.test(token);
       msg = fine
-        ? "你的令牌缺少写入权限。请到 GitHub 令牌设置页面，在「储存库权限」里找到「内容（Contents）」，把它设为「读写（Read and write）」并保存。注意：即使其他项目显示读写也不够，必须单独设置这一项。改完后点「清除旧令牌」重新填入。"
-        : "你的令牌缺少写入权限。请到 GitHub 令牌设置页面勾选「repo（完整仓库权限）」并保存。改完后点「清除旧令牌」重新填入。";
+        ? "你的令牌缺少写入文件的权限。请在令牌设置页找到「+ Add permissions（新增权限）」按钮点开，在列表里找到「Contents／內容」，把它的 Access 改成「Read and write／讀寫」，然后按「更新」。改完回到本页点「清除旧令牌」重新填入。"
+        : "你的令牌缺少写入权限。请到 GitHub 令牌设置页勾选「repo（完整仓库权限）」并保存。改完点「清除旧令牌」重新填入。";
     }
     status("保存失败：" + msg, false);
   }
