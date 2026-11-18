@@ -300,8 +300,7 @@ function onScroll() {
   const max = document.documentElement.scrollHeight - innerHeight;
   $("progress").style.width = (max > 0 ? (scrollY / max) * 100 : 0) + "%";
   $("toTop").classList.toggle("show", scrollY > 400);
-  const cinema = document.getElementById("cinema");
-  if (cinema) cinema.style.transform = `translateY(${Math.min(scrollY * 0.06, 120)}px)`;
+  // 不移动背景层：fixed 背景一旦 translateY 会在顶部露出空隙形成黑带
   detectPage();
 }
 addEventListener("scroll", onScroll, { passive: true });

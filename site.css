@@ -4,7 +4,7 @@
   --accent3:#c79bff; --border:rgba(150,160,220,.16);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;
+html{scroll-behavior:smooth;overflow-x:hidden;
   background:radial-gradient(ellipse 70% 55% at 12% 8%,rgba(74,92,230,.30),transparent 60%),
     radial-gradient(ellipse 60% 50% at 88% 18%,rgba(170,80,240,.24),transparent 60%),
     radial-gradient(ellipse 75% 60% at 78% 92%,rgba(30,170,180,.22),transparent 62%),
@@ -424,4 +424,5 @@ footer{border-top:1px solid var(--border);padding-top:30px;margin-top:60px;
   .stat b{font-size:1.6rem}
   .particle-canvas{opacity:.4}
   .to-top{right:14px;bottom:14px;width:40px;height:40px}
+  .page-num{display:none}
 }

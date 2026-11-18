@@ -21,8 +21,9 @@
     document.body.insertBefore(cinema, document.body.firstChild);
   }
 
-  /* 原创 WebGL 流体极光背景（桌面端，手机自动回退 CSS） */
-  if (!document.getElementById("shaderCanvas")) {
+  /* WebGL 流体背景默认关闭（GPU 占用过高）；纯 CSS 极光层已提供动画背景。
+     如需启用，在地址栏加 ?shader=1 */
+  if (new URLSearchParams(location.search).get("shader") === "1" && !document.getElementById("shaderCanvas")) {
     const cv = document.createElement("canvas");
     cv.id = "shaderCanvas";
     cv.className = "shader-canvas";
